@@ -55,11 +55,10 @@ public class UIManager
         {
             _uibuttons[i] = GameObject.Find(_uibuttonsstr[i]);
 
-            if(_uibuttons[i] == null)
-            {
-                //Debug.Log("_uibuttons[i]" + i);
-            }
+            
         }
+        //_uibuttons[(int)Define.ButtonsEnum.FireT].
+
 
         Plus_Button_False();
         _textFields = new TextMeshProUGUI[(int)Define.TextEnum.MaxCount];

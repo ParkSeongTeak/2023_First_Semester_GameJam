@@ -20,7 +20,7 @@ public class SkillUpgradeController : EventTriggerEX
     public bool StartBool { get{ return _startBool; } set{ _startBool = value; } }
     private void Start()
     {
-        
+        init();
         ShowUpgradeMoneyText = new TextMeshProUGUI();
         LVImage = transform.parent.transform.Find($"{transform.parent.name}LV").gameObject;
         if (LVImage == null)
@@ -33,7 +33,6 @@ public class SkillUpgradeController : EventTriggerEX
         Debug.Log(ShowUpgradeMoneyText.name);
 
 
-        init();
        
     }
 
@@ -56,27 +55,10 @@ public class SkillUpgradeController : EventTriggerEX
 
     }
 
-    protected override void OnDrag(PointerEventData data)
-    {
-
-    }
-
     protected override void OnEndDrag(PointerEventData data)
     {
         Debug.Log("PlusRayCastTower");
         gameObject.SetActive(false);
-
-    }
-
-
-    protected override void OnPointerClick(PointerEventData data)
-    {
-
-    }
-    protected override void OnPointerExit(PointerEventData data)
-    {
-
-        Debug.Log("Exit");
 
     }
 

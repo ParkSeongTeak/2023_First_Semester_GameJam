@@ -47,21 +47,27 @@ public class Define
     public enum ButtonsEnum 
     {
         BackGroundUI,
-        FireT,
-        FireTLV,
-        FireT_Plus,
+        
         WaterT,
         WaterTLV,
         WaterT_Plus,
+
         GrassT,
         GrassTLV,
         GrassT_Plus,
+
         UpgradeMoney,
         UpgradeMoneyLV,
         UpgradeMoney_Plus,
         SkillExplosion,
         SkillExplosionLV,
         SkillExplosion_Plus,
+
+
+        FireT,
+        FireTLV,
+        FireT_Plus,
+
 
         SkillSlow,
         SkillSlowLV,
@@ -103,5 +109,29 @@ public class Define
 
 
     }
-    
+
+
+    public enum 한글
+    {
+        가,
+        나,
+        다,
+        라,
+        마,
+        바,
+        사,
+        MaxCount
+
+
+    }
+
+    public enum 마우스컨트롤
+    {
+        클릭,
+        드래그,
+
+        MaxCount
+    }
+
+
 }

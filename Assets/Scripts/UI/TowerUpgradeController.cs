@@ -19,7 +19,7 @@ public class TowerUpgradeController : EventTriggerEX
 
     private void Start()
     {
-        
+        init();
         ShowUpgradeMoneyText = new TextMeshProUGUI();
         LVImage = transform.parent.transform.Find($"{transform.parent.name}LV").gameObject;
         if (LVImage == null)
@@ -27,11 +27,7 @@ public class TowerUpgradeController : EventTriggerEX
             Debug.Log($"{transform.name} : cant find LV:  {transform.parent.name}LV");
         }
         ShowUpgradeMoneyText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        ShowUpgradeMoneyText.text = $"{GameManager.UPGRATECOST[GameManager.Instance.LV[(int)MyProperty]]}";
-
-
-        init();
-        
+        ShowUpgradeMoneyText.text = $"{GameManager.UPGRATECOST[GameManager.Instance.LV[(int)MyProperty]]}";        
     }
 
     protected override void OnPointerDown(PointerEventData data)
@@ -53,29 +49,10 @@ public class TowerUpgradeController : EventTriggerEX
         }
     }
 
-    protected override void OnDrag(PointerEventData data)
-    {
-
-    }
 
     protected override void OnEndDrag(PointerEventData data)
     {
-        Debug.Log("PlusRayCastTower");
         gameObject.SetActive(false);
-
     }
 
-    protected override void OnPointerClick(PointerEventData data)
-    {
-
-        Debug.Log("PointerClick");
-        
-       
-    }
-
-    protected override void OnPointerExit(PointerEventData data)
-    {
-        
-    }
-    
 }

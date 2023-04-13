@@ -19,7 +19,7 @@ public class StartPoint : MonoBehaviour
             Monster[i] = Resources.Load<GameObject>($"Prefabs/Monster/Monster{i}");
         }
         StartCoroutine(MonsterWave());
-
+        //GameManager.Input.KeyAction += MonsterRegen;
     }
     float MonsterToMonsterTime()
     {

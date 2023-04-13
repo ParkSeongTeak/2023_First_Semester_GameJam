@@ -3,18 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
 
 public class InputManager 
 {
-    public Action KeyAction = null;
+    Action _keyAction = null;
+    public Action KeyAction { get { return _keyAction; } set { _keyAction = value; } }
+
+
+
     public void init()
     {
-        //DeleteTowerButton = Re
     }
     public void OnUpdate()
     {
-        //KeyAction.Invoke();
-        
+        KeyAction?.Invoke();
+
     }
 
 
@@ -36,6 +41,12 @@ public class InputManager
         return target;
     }
 
-
+    IEnumerator Play()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1.0f);
+        }
+    }
 
 }

@@ -21,24 +21,15 @@ public class TowerButtonController : EventTriggerEX
     
     private void Start()
     {
+
+        init();
         UiDragImage = new GameObject();
         UiImage = Resources.Load<GameObject>($"Prefabs/UI/{System.Enum.GetName(typeof(Define.Property), MyProperty)}T_Drag_UI");
 
         ShowUpgradeMoney = transform.Find($"{transform.name}_Plus").gameObject;
-        init();
-       
+
     }
     
-
-    protected override void OnPointerExit(PointerEventData data)
-    {
-        //TODO
-    }
-    protected override void OnPointerDown(PointerEventData data)
-    {
-        //TODO
-    }
-
     protected override void OnDrag(PointerEventData data)
     {
         UiDragImage.transform.position = data.position;

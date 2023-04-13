@@ -23,27 +23,16 @@ public class SkillButtonController : EventTriggerEX
     bool CanBuild = false;
     private void Start()
     {
+        init();
         _skillConst[(int)Define.Skill.Explosion] = 20;
         _skillConst[(int)Define.Skill.Sticky] = 20;
         _skillConst[(int)Define.Skill.Nullity] = 20;
         
-        UiDragImage = new GameObject();
-
         UiImage = Resources.Load<GameObject>($"Prefabs/UI/{System.Enum.GetName(typeof(Define.Skill), MySkill)}_Drag_UI");
         
         ShowUpgradeMoney = transform.Find($"{transform.name}_Plus").gameObject;
-
-        init();
-       
-
     }
-    
-    protected override void OnPointerDown(PointerEventData data)
-    {
-
-
-    }
-    protected override void OnBeginDrag(PointerEventData data)
+   protected override void OnBeginDrag(PointerEventData data)
     {
         if (GameManager.Instance.Money >= _skillConst[(int)MySkill])
         {

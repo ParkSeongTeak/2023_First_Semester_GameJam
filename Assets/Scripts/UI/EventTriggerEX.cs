@@ -36,41 +36,11 @@ public class EventTriggerEX : MonoBehaviour
         entry_BeginDrag.callback.AddListener((data) => { OnBeginDrag((PointerEventData)data); });
         eventTrigger.triggers.Add(entry_BeginDrag);
 
+    }
+    protected virtual void OnPointerDown(PointerEventData data){}
 
-
-        EventTrigger.Entry entry_PointerExit = new EventTrigger.Entry();
-        entry_PointerExit.eventID = EventTriggerType.PointerExit;
-        entry_PointerExit.callback.AddListener((data) => { OnPointerExit((PointerEventData)data); });
-        eventTrigger.triggers.Add(entry_PointerExit);
-    }
-    protected virtual void OnPointerExit(PointerEventData data)
-    {
-        //TODO
-    }
-    protected virtual void OnPointerDown(PointerEventData data)
-    {
-        //TODO
-    }
-
-    protected virtual void OnDrag(PointerEventData data)
-    {
-        //TODO
-        //ex)
-        //UiDragImage.transform.position = data.position;
-        //드래그로 UI이미지를 끌고다니는 코드
-    }
-
-    protected virtual void OnEndDrag(PointerEventData data)
-    {
-        //TODO
-    }
-
-    protected virtual void OnPointerClick(PointerEventData data)
-    {
-        //TODO
-    }
-    protected virtual void OnBeginDrag(PointerEventData data)
-    {
-        //TODO
-    }
+    protected virtual void OnDrag(PointerEventData data){}
+    protected virtual void OnEndDrag(PointerEventData data){}
+    protected virtual void OnPointerClick(PointerEventData data){}
+    protected virtual void OnBeginDrag(PointerEventData data){}
  }
