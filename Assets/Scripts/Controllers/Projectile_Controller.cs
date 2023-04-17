@@ -6,8 +6,7 @@ public class Projectile_Controller : MonoBehaviour
 {
     float _proj_Dmg;
     float _proj_Spead;
-    float _proj_Slow;
-
+    
     Vector3 targetPos;//Å¸°Ù À§Ä¡
     float _projSpeed = 15.0f;
     public float ProjSpeed { get { return _projSpeed; } }
@@ -23,35 +22,21 @@ public class Projectile_Controller : MonoBehaviour
     public float Proj_Dmg { get { return _proj_Dmg; } set { _proj_Dmg = value; } }
     public float Proj_Spead { get { return _proj_Spead; } set { _proj_Spead = value; } }
 
-    private void Start()
+    private void OnEnable ()
     {
         Fly();
-
     }
-    float GetSome()
-    {
-        return 1.0f;
-    }
+    
     public Define.Property ProjProp()
     {
         return property;
-    }
-
-    public float DMG(float some)
-    {
-        return Proj_Dmg * some;
-    }
-
-    public float Slow()
-    {
-        return _proj_Slow;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Mob")//¸÷ÀÌ¶û ´êÀ¸¸é ¾ø¾îÁü
         {
-            Destroy(this.gameObject);
+            GameManager.Resource.DestroyProjectile(property, this.gameObject);
         }
     }
     

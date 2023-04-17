@@ -75,7 +75,10 @@ public class T_Controller : MonoBehaviour
                 isDelay = true;
                 if (Time.timeScale == 1)
                 {
-                    GameObject go = Instantiate(Projectile);//화살 생성(매개변수로 프리팹 전달),GameObject로 강제 형 변환
+                    //GameObject go = Instantiate(Projectile);//화살 생성(매개변수로 프리팹 전달),GameObject로 강제 형 변환
+                    GameObject go = GameManager.Resource.InstantiateProjectile(property);
+
+
                     go.transform.position = this.transform.position;
                     Vector3 point = NearestMonster();
                     go.GetComponent<Projectile_Controller>().Shoot(point, this.transform.position);

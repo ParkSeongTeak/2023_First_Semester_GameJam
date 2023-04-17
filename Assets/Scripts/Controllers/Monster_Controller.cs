@@ -31,7 +31,7 @@ public class Monster_Controller : MonoBehaviour
     public Define.Property Property { get { return _property; } set { _property = value; } }
     public Define.Property BornProperty { get { return _bornproperty; }}
 
-    public float HP { get { return _HP;}set { _HP = value; } }
+    public float HP { get { return _HP;} set { _HP = value; } }
 
     public void beAttacked( Define.Property Property) //데미지, 투사체 속성
     {
@@ -107,7 +107,7 @@ public class Monster_Controller : MonoBehaviour
             GameManager.Instance.Money += GameManager.Instance.Wave * 2;
             GameManager.Instance.NowPoint += 1;
         }
-        Destroy(this.gameObject);
+        GameManager.Resource.DestroyMonster(_property, this.gameObject);
     }
 
     // Start is called before the first frame update
@@ -119,9 +119,11 @@ public class Monster_Controller : MonoBehaviour
         direction = GameManager.Instance.Direction;
 
     }
-    void Start()
+    void OnEnable()
     {
         _bornproperty = _property;
+        checkBox = 0;
+        _speed = 0.1f;
         HP = GameManager.Instance.StartHP + (GameManager.Instance.Wave - 1) * (GameManager.Instance.Wave - 1) * (GameManager.Instance.WaveHPPlus);
         
 

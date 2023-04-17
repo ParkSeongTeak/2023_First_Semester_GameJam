@@ -17,7 +17,9 @@ public class GameManager : MonoBehaviour
     ResourceManager _resourceManager = new ResourceManager();
     SkillManager _skillManager = new SkillManager();
     UIManager _uIManager = new UIManager();
-    
+    PoolingManager _poolingManager = new PoolingManager();
+
+
     public static GameManager Instance { get { init(); return _instance; } }
     public static InputManager Input { get { return Instance._inputManager; } }
     public static DataManager Data { get { return Instance._dataManager; } }
@@ -25,8 +27,7 @@ public class GameManager : MonoBehaviour
     public static ResourceManager Resource { get { return Instance._resourceManager; } }
     public static SkillManager Skill { get { return Instance._skillManager; } }
     public static UIManager UI { get { return Instance._uIManager; } }
-
-
+    public static PoolingManager Pooling { get { return Instance._poolingManager; } }
     static void init()
     {
 
@@ -42,10 +43,13 @@ public class GameManager : MonoBehaviour
             }
             DontDestroyOnLoad(gm);
             _instance = gm.GetComponent<GameManager>();
+
+            _instance._resourceManager.init();
             _instance._soundManager.init();
 
             _instance._uIManager.init();
             _instance._inputManager.init();
+            _instance._poolingManager.init();
 
             _instance._Tower = new GameObject[3];
             _instance._Tower[(int)Define.Property.Fire] = Resources.Load<GameObject>($"Prefabs/Tower/Tower{(int)Define.Property.Fire}");
@@ -157,7 +161,7 @@ public class GameManager : MonoBehaviour
     {
         _instance._uIManager = new UIManager();
         _instance._uIManager.init();
-
+        _instance._poolingManager.Clear();
     }
 
     public void ReLoadScene()

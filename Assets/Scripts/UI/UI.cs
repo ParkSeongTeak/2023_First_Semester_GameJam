@@ -14,23 +14,7 @@ public class UI : MonoBehaviour
     Slider BGMSlider;
     Slider EffectSlider;
 
-    /*
-    private void Awake()    // 여기가 Awake라서 문제//
-    {
-        ui = GameManager.UI.UI;
-        BGMSlider = GameObject.Find("BGMSlider").GetComponent<Slider>();
-        EffectSlider = GameObject.Find("EffectSlider").GetComponent<Slider>();
-        MainScene = GameManager.UI.ElseFields[(int)Define.Else.MainPage];
-
-        BGMVol = PlayerPrefs.GetFloat("BGMVol" , 0.5f);
-        EffectVol = PlayerPrefs.GetFloat("EffectVol", 0.5f);
-
-        BGMSlider.value = BGMVol;
-        EffectSlider.value = EffectVol;
-
-    }
-    */
-
+   
     public void init()
     {
 
