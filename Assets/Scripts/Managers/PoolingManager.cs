@@ -41,6 +41,16 @@ public class PoolingManager
             _pooling.Add("ProjectileGrass", Projectile.transform);
             Projectile.transform.parent = root.transform;
 
+            GameObject Play = new GameObject("PlayProjectile");
+            _pooling.Add("PlayProjectile", Play.transform);
+            Play.transform.parent = root.transform;
+
+            Play = new GameObject("PlayMonster");
+            _pooling.Add("PlayMonster", Play.transform);
+            Play.transform.parent = root.transform;
+
+
+
         }
 
     }
@@ -56,7 +66,11 @@ public class PoolingManager
         }
         else
         {
-            return MonsterPool.GetChild(0).gameObject;
+
+            GameObject pool = MonsterPool.GetChild(0).gameObject;
+            _pooling.TryGetValue("PlayMonster", out MonsterPool);
+            pool.transform.parent = MonsterPool;
+            return pool;
         }
 
     }
@@ -72,20 +86,19 @@ public class PoolingManager
         }
         else
         {
-            return ProjectilePool.GetChild(0).gameObject;
+            GameObject pool = ProjectilePool.GetChild(0).gameObject;
+            _pooling.TryGetValue("PlayProjectile", out ProjectilePool);
+            pool.transform.parent = ProjectilePool;
+            return pool;
         }
-
     }
     public void SetPoolMonster(Define.Property property, GameObject destroyObj)
     {
         Transform MonsterPool;
 
         string name = $"Monster{Enum.GetName(typeof(Define.Property), property) }";
-        if (! _pooling.TryGetValue(name, out MonsterPool)) {
-            Debug.Log("??");
-        }
-
-        MonsterPool = destroyObj.transform.parent;
+        _pooling.TryGetValue(name, out MonsterPool);
+        destroyObj.transform.parent = MonsterPool;
 
     }
     public void SetPoolProjectile(Define.Property property, GameObject destroyObj)
@@ -95,8 +108,7 @@ public class PoolingManager
 
         string name = $"Projectile{Enum.GetName(typeof(Define.Property), property) }";
         _pooling.TryGetValue(name, out Projectile);
-
-        Projectile = destroyObj.transform.parent;
+        destroyObj.transform.parent = Projectile;
 
     }
     public void Clear()

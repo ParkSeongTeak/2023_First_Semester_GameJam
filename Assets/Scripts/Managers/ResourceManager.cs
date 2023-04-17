@@ -66,7 +66,6 @@ public class ResourceManager
         }
         else
         {
-            projectile.SetActive(true);
             return projectile;
         }
 
@@ -74,6 +73,7 @@ public class ResourceManager
     public void DestroyMonster(Define.Property property, GameObject destroyObj)
     {
         destroyObj.SetActive(false);
+
         GameManager.Pooling.SetPoolMonster(property, destroyObj);
 
     }

@@ -77,14 +77,14 @@ public class T_Controller : MonoBehaviour
                 {
                     //GameObject go = Instantiate(Projectile);//화살 생성(매개변수로 프리팹 전달),GameObject로 강제 형 변환
                     GameObject go = GameManager.Resource.InstantiateProjectile(property);
-
-
                     go.transform.position = this.transform.position;
+                    go.GetComponent<Projectile_Controller>().setTarget(FindTarget(inRangeMonster).transform.position);
+                    go.SetActive(true);
+
                     Vector3 point = NearestMonster();
                     go.GetComponent<Projectile_Controller>().Shoot(point, this.transform.position);
                     GameManager.Sound.Play("Effect/gun2");
-                    go.GetComponent<Projectile_Controller>().setTarget(FindTarget(inRangeMonster).transform.position);
-                    Destroy(go, 2f);
+                    
                 }
                 yield return new WaitForSecondsRealtime(GameManager.SHOOTSPEED[GameManager.Instance.LV[(int)Define.LV.ShootSpeed]]);
                 isDelay = false;

@@ -721,7 +721,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 26896133}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1563,7 +1563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4616677647811103828, guid: 9808cd76b924ef846a33540b5c37deab, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.1000061
+      value: 0.099975586
       objectReference: {fileID: 0}
     - target: {fileID: 4616677647811103828, guid: 9808cd76b924ef846a33540b5c37deab, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2992,7 +2992,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 574e89ed0f21c0247ab455c6beb497eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InputField: {fileID: 0}
 --- !u!1001 &879617746
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3304,7 +3303,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 574e89ed0f21c0247ab455c6beb497eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InputField: {fileID: 0}
 --- !u!224 &1089892253 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9001325926153920263, guid: 9808cd76b924ef846a33540b5c37deab, type: 3}
@@ -4126,7 +4124,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 15.278657, y: -4.374999}
+  m_AnchoredPosition: {x: 15.278656, y: -4.374999}
   m_SizeDelta: {x: 44.937313, y: 43.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &865016469884236186
@@ -4783,7 +4781,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 26896133}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -55,7 +56,11 @@ public class GameManager : MonoBehaviour
             _instance._Tower[(int)Define.Property.Fire] = Resources.Load<GameObject>($"Prefabs/Tower/Tower{(int)Define.Property.Fire}");
             _instance._Tower[(int)Define.Property.Water] = Resources.Load<GameObject>($"Prefabs/Tower/Tower{(int)Define.Property.Water}");
             _instance._Tower[(int)Define.Property.Grass] = Resources.Load<GameObject>($"Prefabs/Tower/Tower{(int)Define.Property.Grass}");
-
+            _instance._startPoint = GameObject.Find("StartPoint");
+            if(_instance._startPoint == null)
+            {
+                Debug.Log("StartPoint 못 찾음");
+            }
             //스킬
             _instance._Skill = new GameObject[3];
             _instance._Skill[(int)Define.Skill.Explosion] = Resources.Load<GameObject>($"Prefabs/Skill/Skill{(int)Define.Skill.Explosion}");
@@ -180,6 +185,7 @@ public class GameManager : MonoBehaviour
 
     GameObject[] _Tower;
     GameObject[] _Skill;
+    GameObject _startPoint;
     List<List<GameObject>> _map = new List<List<GameObject>>();
 
     int _startHP = 2;
@@ -216,6 +222,7 @@ public class GameManager : MonoBehaviour
 
     public static string MAXSCORESTR { get { return maxSCORESTR; } }
 
+    public GameObject StartPoint { get { return Instance._startPoint; } }
     public GameObject[] Tower { get { return Instance._Tower; } }
     public GameObject[] Skills { get { return Instance._Skill; } }
     public int Money { get { return Instance._money; } set { Instance._money = value; Instance._uIManager.PointUpdate(); } }
