@@ -21,7 +21,7 @@ public class Projectile_Controller : MonoBehaviour
 
     public float Proj_Dmg { get { return _proj_Dmg; } set { _proj_Dmg = value; } }
     public float Proj_Spead { get { return _proj_Spead; } set { _proj_Spead = value; } }
-
+    Coroutine Coroutine;
     private void Start()
     {
         Fly();
@@ -29,6 +29,7 @@ public class Projectile_Controller : MonoBehaviour
     private void OnEnable ()
     {
         Fly();
+        Coroutine = StartCoroutine(DestroyTime());
     }
     
     public Define.Property ProjProp()
@@ -41,8 +42,17 @@ public class Projectile_Controller : MonoBehaviour
         if (collision.gameObject.tag == "Mob")//¸÷ÀÌ¶û ´êÀ¸¸é ¾ø¾îÁü
         {
             GameManager.Resource.DestroyProjectile(property, this.gameObject);
+            StopCoroutine(Coroutine);
         }
     }
+    static WaitForSeconds waitForSeconds = new WaitForSeconds(2.5f);
+
+    IEnumerator DestroyTime()
+    {
+        yield return waitForSeconds;
+        GameManager.Resource.DestroyProjectile(property, this.gameObject);
+    }
+
     
     public void setTarget(Vector3 point)
     {
@@ -57,7 +67,7 @@ public class Projectile_Controller : MonoBehaviour
     // Start is called before the first frame update
     public void Shoot(Vector3 point,Vector3 startPos)//¸ñÇ¥ ÁöÁ¡, ½ÃÀÛ ÁöÁ¡
     {
-        Target = new GameManager();
+        //Target = new GameManager();
         gameObject.transform.LookAt(point);
         targetPos = point;
         

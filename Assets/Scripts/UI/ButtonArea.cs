@@ -21,7 +21,7 @@ public class ButtonArea : MonoBehaviour
     public bool StartBool { get { return _startBool; } set { _startBool = value; } }
     private void Start()
     {
-        UiDragImage = new GameObject();
+        //UiDragImage = new GameObject();
         UiImage = Resources.Load<GameObject>($"Prefabs/UI/{System.Enum.GetName(typeof(Define.Skill), MySkill)}_Drag_UI");
 
         ShowUpgradeMoneyText = new TextMeshProUGUI();

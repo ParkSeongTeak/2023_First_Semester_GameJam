@@ -23,7 +23,7 @@ public class TowerButtonController : EventTriggerEX
     {
 
         init();
-        UiDragImage = new GameObject();
+        //UiDragImage = new GameObject();
         UiImage = Resources.Load<GameObject>($"Prefabs/UI/{System.Enum.GetName(typeof(Define.Property), MyProperty)}T_Drag_UI");
 
         ShowUpgradeMoney = transform.Find($"{transform.name}_Plus").gameObject;
@@ -39,7 +39,7 @@ public class TowerButtonController : EventTriggerEX
     {
         //TODO
         Destroy(UiDragImage);
-        UiDragImage = new GameObject();
+        //UiDragImage = new GameObject();
         if (CanBuild)
         {
             GameObject tile = GameManager.Input.GetClicked2DObject(1 << 7);

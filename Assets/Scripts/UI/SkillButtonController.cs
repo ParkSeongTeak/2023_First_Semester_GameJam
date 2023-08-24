@@ -52,7 +52,7 @@ public class SkillButtonController : EventTriggerEX
             Destroy(UiDragImage);
         }
         
-        UiDragImage = new GameObject();
+        //UiDragImage = new GameObject();
         
         if (CanBuild)
         {

@@ -6,9 +6,9 @@ using UnityEngine;
 public class ResourceManager 
 {
     Action MonsterMove = null;
-    
+
     GameObject[] _projectile = new GameObject[3];
-    
+
     GameObject[] _monster = new GameObject[3];
     
     public List<GameObject> _monster_List = new List<GameObject>();
