@@ -42,7 +42,10 @@ public class SkillButtonController : EventTriggerEX
     }
     protected override void OnDrag(PointerEventData data)
     {
-        UiDragImage.transform.position = data.position;
+        if (CanBuild)
+        {
+            UiDragImage.transform.position = data.position;
+        }
     }
 
     protected override void OnEndDrag(PointerEventData data)

@@ -1,11 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PoolingManager 
 {
-    Dictionary<string, Transform> _pooling = new Dictionary<string, Transform>();
+    Dictionary<string, Transform> _poolingRoot = new Dictionary<string, Transform>();
+    Dictionary<string, Stack<GameObject>> _pool = new Dictionary<string, Stack<GameObject>>();
+    Dictionary<Define.Property, string> _projectileNameForPool = new Dictionary<Define.Property, string>();
+    Dictionary<Define.Property, string> _monsterNameForPool = new Dictionary<Define.Property, string>();
 
     GameObject root = null;
 
@@ -14,39 +18,67 @@ public class PoolingManager
         
         if (root == null )
         {
+
+            _projectileNameForPool.Add(Define.Property.Fire, "MonsterFire");
+            _projectileNameForPool.Add(Define.Property.Water, "MonsterWater");
+            _projectileNameForPool.Add(Define.Property.Grass, "MonsterGrass");
+
+            _monsterNameForPool.Add(Define.Property.Fire, "ProjectileFire");
+            _monsterNameForPool.Add(Define.Property.Water, "ProjectileWater");
+            _monsterNameForPool.Add(Define.Property.Grass, "ProjectileGrass");
+
+
             root =  new GameObject ("root");
 
+
+
+
             GameObject Monster = new GameObject ("MonsterFire" );
-            _pooling.Add("MonsterFire", Monster.transform);
+            _poolingRoot.Add("MonsterFire", Monster.transform);
+            _pool.Add("MonsterFire", new Stack<GameObject>());
             Monster.transform.parent = root.transform;
 
             Monster = new GameObject ("MonsterWater" );
-            _pooling.Add("MonsterWater", Monster.transform);
+            _poolingRoot.Add("MonsterWater", Monster.transform);
+            _pool.Add("MonsterWater", new Stack<GameObject>());
+
             Monster.transform.parent = root.transform;
 
             Monster = new GameObject ("MonsterGrass" );
-            _pooling.Add("MonsterGrass", Monster.transform);
+            _poolingRoot.Add("MonsterGrass", Monster.transform);
+            _pool.Add("MonsterGrass", new Stack<GameObject>());
+
             Monster.transform.parent = root.transform;
 
 
             GameObject Projectile = new GameObject ("ProjectileFire" );
-            _pooling.Add("ProjectileFire", Projectile.transform);
+            _poolingRoot.Add("ProjectileFire", Projectile.transform);
+            _pool.Add("ProjectileFire", new Stack<GameObject>());
+
             Projectile.transform.parent = root.transform;
 
             Projectile =new GameObject ("ProjectileWater");
-            _pooling.Add("ProjectileWater", Projectile.transform);
+            _poolingRoot.Add("ProjectileWater", Projectile.transform);
+            _pool.Add("ProjectileWater", new Stack<GameObject>());
+
             Projectile.transform.parent = root.transform;
 
             Projectile = new GameObject ("ProjectileGrass" );
-            _pooling.Add("ProjectileGrass", Projectile.transform);
+            _poolingRoot.Add("ProjectileGrass", Projectile.transform);
+            _pool.Add("ProjectileGrass", new Stack<GameObject>());
+
             Projectile.transform.parent = root.transform;
 
             GameObject Play = new GameObject("PlayProjectile");
-            _pooling.Add("PlayProjectile", Play.transform);
+            _poolingRoot.Add("PlayProjectile", Play.transform);
+            _pool.Add("PlayProjectile", new Stack<GameObject>());
+
             Play.transform.parent = root.transform;
 
             Play = new GameObject("PlayMonster");
-            _pooling.Add("PlayMonster", Play.transform);
+            _poolingRoot.Add("PlayMonster", Play.transform);
+            _pool.Add("PlayMonster", new Stack<GameObject>());
+
             Play.transform.parent = root.transform;
 
 
@@ -57,19 +89,17 @@ public class PoolingManager
 
     public GameObject GetPoolMonster(Define.Property property)
     {
-        Transform MonsterPool;
-        string name = $"Monster{Enum.GetName(typeof(Define.Property), property) }";
-        _pooling.TryGetValue(name, out MonsterPool);
-        if(MonsterPool.childCount == 0)
+        
+
+        string name = $"Monster{Enum.GetName(typeof(Define.Property), property)}";
+
+        if (_pool[name].Count == 0)
         {
             return null;
         }
         else
         {
-
-            GameObject pool = MonsterPool.GetChild(0).gameObject;
-            _pooling.TryGetValue("PlayMonster", out MonsterPool);
-            pool.transform.parent = MonsterPool;
+            GameObject pool = _pool[name].Pop();
             return pool;
         }
 
@@ -77,43 +107,57 @@ public class PoolingManager
     public GameObject GetPoolProjectile(Define.Property property)
     {
 
-        Transform ProjectilePool;
-        string name = $"Projectile{Enum.GetName(typeof(Define.Property), property) }";
-        _pooling.TryGetValue(name, out ProjectilePool);
-        if (ProjectilePool.childCount == 0)
+
+        string name = $"Projectile{Enum.GetName(typeof(Define.Property), property)}";
+
+        if (_pool[name].Count == 0)
         {
             return null;
         }
         else
         {
-            GameObject pool = ProjectilePool.GetChild(0).gameObject;
-            _pooling.TryGetValue("PlayProjectile", out ProjectilePool);
-            pool.transform.parent = ProjectilePool;
-            return pool;
+
+            return _pool[name].Pop();
         }
     }
     public void SetPoolMonster(Define.Property property, GameObject destroyObj)
     {
+
+        //실험용 시스템
+        //UnityEngine.Object.Destroy(destroyObj);
+        //return;
+
         Transform MonsterPool;
 
         string name = $"Monster{Enum.GetName(typeof(Define.Property), property) }";
-        _pooling.TryGetValue(name, out MonsterPool);
-        destroyObj.transform.parent = MonsterPool;
+        _poolingRoot.TryGetValue(name, out MonsterPool);
+        //destroyObj.transform.parent = MonsterPool;
+
+
+        _pool[name].Push(destroyObj);
+
 
     }
     public void SetPoolProjectile(Define.Property property, GameObject destroyObj)
     {
+        //실험용 시스템
+        //UnityEngine.Object.Destroy(destroyObj);
+        //return;
 
         Transform Projectile;
 
         string name = $"Projectile{Enum.GetName(typeof(Define.Property), property) }";
-        _pooling.TryGetValue(name, out Projectile);
-        destroyObj.transform.parent = Projectile;
+        _poolingRoot.TryGetValue(name, out Projectile);
+        //destroyObj.transform.parent = Projectile;
+
+        _pool[name].Push(destroyObj);
 
     }
     public void Clear()
     {
-        _pooling.Clear();
+        _poolingRoot.Clear();
+        _pool.Clear();
+
         UnityEngine.Object.Destroy(root);
     }
 }

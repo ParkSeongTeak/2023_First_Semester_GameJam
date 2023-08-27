@@ -81,7 +81,6 @@ public class Monster_Controller : MonoBehaviour
         HP = GameManager.Instance.StartHP + (GameManager.Instance.Wave - 1) * (GameManager.Instance.Wave - 1) * (GameManager.Instance.WaveHPPlus);
 
 
-        Debug.Log($"Start : {pooling++} checkBox : {checkBox}");
     }
 
 
@@ -109,7 +108,7 @@ public void beAttacked( Define.Property Property) //데미지, 투사체 속성
         if (this.HP <= 0)//사망
         {
             _live = false;
-            Invoke("Dead", 0);
+            Dead();
         }
     }
     public void beAttacked(float DMG) //데미지, 투사체 속성
@@ -117,8 +116,9 @@ public void beAttacked( Define.Property Property) //데미지, 투사체 속성
         this.HP -= DMG;
         if (this.HP <= 0)//사망
         {
-            _live = false;
-            Invoke("Dead", 0);
+            _live = false; 
+            Dead();
+
         }
     }
 

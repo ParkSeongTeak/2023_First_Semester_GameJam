@@ -62,6 +62,10 @@ public class ResourceManager
         GameObject projectile = GameManager.Pooling.GetPoolProjectile(property);
         if (projectile == null)
         {
+
+            string name = $"Monster{Enum.GetName(typeof(Define.Property), property)}";
+            //destroyObj.transform.parent = MonsterPool;
+
             return UnityEngine.Object.Instantiate(_projectile[(int)property]);
         }
         else
@@ -72,13 +76,21 @@ public class ResourceManager
     }
     public void DestroyMonster(Define.Property property, GameObject destroyObj)
     {
-        destroyObj.SetActive(false);
 
+        //UnityEngine.Object.Destroy(destroyObj);
+        //return;
+
+
+        destroyObj.SetActive(false);
         GameManager.Pooling.SetPoolMonster(property, destroyObj);
 
     }
     public void DestroyProjectile(Define.Property property, GameObject destroyObj)
     {
+
+        //UnityEngine.Object.Destroy(destroyObj);
+        //return;
+
         destroyObj.SetActive(false);
         GameManager.Pooling.SetPoolProjectile(property, destroyObj);
 
