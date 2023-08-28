@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 4477152746454064297}
   m_Layer: 10
   m_Name: Tower1
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -223,7 +223,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -237,7 +237,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6, y: 6}
+  m_Size: {x: 1.55, y: 1.55}
   m_EdgeRadius: 0
 --- !u!50 &1167657624027086077
 Rigidbody2D:
@@ -272,8 +272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46af849f1adb23e4b92c6a3b820f428e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InAreaMonster: []
-  inRangeMonster: []
   property: 1
 --- !u!1 &7643386982243755046
 GameObject:

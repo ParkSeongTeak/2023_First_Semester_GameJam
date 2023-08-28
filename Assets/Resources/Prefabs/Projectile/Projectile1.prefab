@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -2779233842465533826}
   - component: {fileID: -6267708110576190740}
   - component: {fileID: 8778701437311902123}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Projectile1
   m_TagString: Arrow
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 02f20ce4f3b10fd47935bc25e4807c29, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -100,7 +100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 034ecbf52a0f42245b1c4a9c84fc519a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projSpeed: 9.53
   property: 1
 --- !u!50 &-2779233842465533826
 Rigidbody2D:

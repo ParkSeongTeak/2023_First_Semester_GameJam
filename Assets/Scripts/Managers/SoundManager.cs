@@ -6,14 +6,14 @@ public class SoundManager
 {
 
     
-    AudioSource[] _audioSources = new AudioSource[(int)Define.Sound.MaxCount];
+    AudioSource[] _audioSources = new AudioSource[(int)Define.Sounds.MaxCount];
     Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
     GameObject root;
     // MP3 Player   -> AudioSource
     // MP3 À½¿ø     -> AudioClip
     // °ü°´(±Í)     -> AudioListener
 
-    public void init()
+    public void Init()
     {
         if (root == null)
         {
@@ -23,7 +23,7 @@ public class SoundManager
             {
                 root = new GameObject { name = "@Sound" };
                 Object.DontDestroyOnLoad(root);
-                string[] soundNames = System.Enum.GetNames(typeof(Define.Sound));
+                string[] soundNames = System.Enum.GetNames(typeof(Define.Sounds));
                 for (int i = 0; i < soundNames.Length - 1; i++)
                 {
                     GameObject go = new GameObject { name = soundNames[i] };
@@ -31,25 +31,31 @@ public class SoundManager
                     go.transform.parent = root.transform;
                 }
 
-                _audioSources[(int)Define.Sound.BGM].loop = true;
+                _audioSources[(int)Define.Sounds.BGM].loop = true;
             }
             else
             {
-                string[] soundNames = System.Enum.GetNames(typeof(Define.Sound));
+                string[] soundNames = System.Enum.GetNames(typeof(Define.Sounds));
                 for (int i = 0; i < soundNames.Length - 1; i++)
                 {
                     GameObject go = root.transform.Find(soundNames[i]).gameObject;
                     _audioSources[i] = go.GetComponent<AudioSource>();
                 }
 
-                _audioSources[(int)Define.Sound.BGM].loop = true;
+                _audioSources[(int)Define.Sounds.BGM].loop = true;
 
             }
         }
         
-
     }
-
+    public void SetVolume(Define.Sounds type, float volume)
+    {
+        _audioSources[(int)type].volume = volume;
+    }
+    public float GetVolume(Define.Sounds type)
+    {
+        return _audioSources[(int)type].volume;
+    }
     public void Clear()
     {
         foreach (AudioSource audioSource in _audioSources)
@@ -60,20 +66,20 @@ public class SoundManager
         _audioClips.Clear();
     }
 
-    public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
+    public void Play(string path, Define.Sounds type = Define.Sounds.SFX, float pitch = 1.0f)
     {
         AudioClip audioClip = GetOrAddAudioClip(path, type);
         Play(audioClip, type, pitch);
     }
 
-    public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
+    public void Play(AudioClip audioClip, Define.Sounds type = Define.Sounds.SFX, float pitch = 1.0f)
     {
         if (audioClip == null)
             return;
 
-        if (type == Define.Sound.BGM)
+        if (type == Define.Sounds.BGM)
         {
-            AudioSource audioSource = _audioSources[(int)Define.Sound.BGM];
+            AudioSource audioSource = _audioSources[(int)Define.Sounds.BGM];
             if (audioSource.isPlaying)
                 audioSource.Stop();
 
@@ -83,26 +89,26 @@ public class SoundManager
         }
         else
         {
-            AudioSource audioSource = _audioSources[(int)Define.Sound.Effect];
+            AudioSource audioSource = _audioSources[(int)Define.Sounds.SFX];
             audioSource.pitch = pitch;
             audioSource.PlayOneShot(audioClip);
         }
     }
 
-    public void SetAudioSourceVolume(float volume, Define.Sound sound)
+    public void SetAudioSourceVolume(float volume, Define.Sounds sound)
     {
         if (_audioSources[(int)sound] == null) Debug.Log("No _audioSources");
         _audioSources[(int)sound].volume = volume;
     }
 
-    AudioClip GetOrAddAudioClip(string path, Define.Sound type = Define.Sound.Effect)
+    AudioClip GetOrAddAudioClip(string path, Define.Sounds type = Define.Sounds.SFX)
     {
         if (path.Contains("Sounds/") == false)
             path = $"Sounds/{path}";
 
         AudioClip audioClip = null;
         
-        if (type == Define.Sound.BGM)
+        if (type == Define.Sounds.BGM)
         {
             audioClip = Resources.Load<AudioClip>(path);
         }

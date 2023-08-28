@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class Define 
 {
-    
-    public enum Sound
+    public enum Scenes
+    {
+        Main,
+        Game,
+    }
+
+    public enum UIEvent
+    {
+        Click,
+        Drag,
+        DragEnd,
+        DragStart,
+    }
+    public enum Sounds
     {
         BGM,
-        Effect,
+        SFX,
         MaxCount
     }
     public enum LV
@@ -16,17 +28,18 @@ public class Define
         Fire,
         Water,
         Grass, 
-        ShootSpeed,
-        MoneyGet,
+        AttackSpeed,
+        Money,
         // 5+skill
         Explosion,
-        Nullity,
-        Sticky,
+        Slow,
+        Neutralize,
+        
 
         
         MaxCount
     }
-    public enum Property
+    public enum Properties
     {
         Fire,
         Water,
@@ -35,56 +48,17 @@ public class Define
 
         MaxCount
     }
-    public enum Skill
+    public enum Skills
     {
         Explosion,
-        Nullity,
-        Sticky,
+        Slow,
+        Neutralize,
+        
 
         MaxCount
 
     }
-    public enum ButtonsEnum 
-    {
-        BackGroundUI,
-        
-        WaterT,
-        WaterTLV,
-        WaterT_Plus,
-
-        GrassT,
-        GrassTLV,
-        GrassT_Plus,
-
-        UpgradeMoney,
-        UpgradeMoneyLV,
-        UpgradeMoney_Plus,
-        SkillExplosion,
-        SkillExplosionLV,
-        SkillExplosion_Plus,
-
-
-        FireT,
-        FireTLV,
-        FireT_Plus,
-
-
-        SkillSlow,
-        SkillSlowLV,
-        SkillSlow_Plus,
-
-        SkillNone,
-        SkillNoneLV,
-        SkillNone_Plus,
-        
-        AttackSpead,
-        AttackSpeadLV,
-        AttackSpead_Plus,
-        ShootSpeed,
-        MoneyGet,
-        MaxCount
-
-    }
+   
 
     public enum TextEnum
     {
@@ -100,38 +74,5 @@ public class Define
     }
 
 
-    public enum Else
-    {
-        BackGroundUI,
-        MainPage,
-        GameOver,
-        MaxCount
-
-
-    }
-
-
-    public enum 한글
-    {
-        가,
-        나,
-        다,
-        라,
-        마,
-        바,
-        사,
-        MaxCount
-
-
-    }
-
-    public enum 마우스컨트롤
-    {
-        클릭,
-        드래그,
-
-        MaxCount
-    }
-
-
+    
 }

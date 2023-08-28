@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,12 +9,12 @@ public class Projectile_Controller : MonoBehaviour
     float _proj_Spead;
     
     Vector3 targetPos;//타겟 위치
-    float _projSpeed = 15.0f;
+    float _projSpeed { get; set; } = 15.0f;
     public float ProjSpeed { get { return _projSpeed; } }
     Vector3 Tpoint;//목표 위치
 
     [SerializeField]
-    Define.Property property = Define.Property.Fire;
+    Define.Properties property = Define.Properties.Fire;
 
     Vector3[] _direction = new Vector3[9];
 
@@ -22,6 +23,15 @@ public class Projectile_Controller : MonoBehaviour
     public float Proj_Dmg { get { return _proj_Dmg; } set { _proj_Dmg = value; } }
     public float Proj_Spead { get { return _proj_Spead; } set { _proj_Spead = value; } }
     Coroutine Coroutine;
+
+    private void Awake()
+    {
+        Transform Projectile;
+
+        string name = $"Projectile{Enum.GetName(typeof(Define.Properties), property)}";
+        GameManager.Pooling.PoolingRoot.TryGetValue(name, out Projectile);
+        transform.parent = Projectile;
+    }
     private void Start()
     {
         Fly();
@@ -32,7 +42,7 @@ public class Projectile_Controller : MonoBehaviour
         Coroutine = StartCoroutine(DestroyTime());
     }
     
-    public Define.Property ProjProp()
+    public Define.Properties ProjProp()
     {
         return property;
     }
@@ -61,7 +71,6 @@ public class Projectile_Controller : MonoBehaviour
     public void Fly()
     {
         GetComponent<Rigidbody2D>().velocity = (Vector2)(Tpoint - this.transform.position).normalized * ProjSpeed;
-        
     }
 
     // Start is called before the first frame update

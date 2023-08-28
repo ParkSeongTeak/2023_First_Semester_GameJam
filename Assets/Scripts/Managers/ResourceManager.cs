@@ -19,10 +19,8 @@ public class ResourceManager
     int idx;
 
 
-    //List 몬스터;
-    //List 투사체;
 
-    public void init()
+    public void Init()
     {
         for (int i = 0; i < 3; i++)
         {
@@ -43,7 +41,7 @@ public class ResourceManager
             }
         }
     }
-    public GameObject InstantiateMonster(Define.Property property)
+    public GameObject InstantiateMonster(Define.Properties property)
     {
         GameObject monster = GameManager.Pooling.GetPoolMonster(property);
         if (monster == null)
@@ -56,14 +54,14 @@ public class ResourceManager
             return monster;
         }
     }
-    public GameObject InstantiateProjectile(Define.Property property)
+    public GameObject InstantiateProjectile(Define.Properties property)
     {
 
         GameObject projectile = GameManager.Pooling.GetPoolProjectile(property);
         if (projectile == null)
         {
 
-            string name = $"Monster{Enum.GetName(typeof(Define.Property), property)}";
+            string name = $"Monster{Enum.GetName(typeof(Define.Properties), property)}";
             //destroyObj.transform.parent = MonsterPool;
 
             return UnityEngine.Object.Instantiate(_projectile[(int)property]);
@@ -74,7 +72,7 @@ public class ResourceManager
         }
 
     }
-    public void DestroyMonster(Define.Property property, GameObject destroyObj)
+    public void DestroyMonster(Define.Properties property, GameObject destroyObj)
     {
 
         //UnityEngine.Object.Destroy(destroyObj);
@@ -85,7 +83,7 @@ public class ResourceManager
         GameManager.Pooling.SetPoolMonster(property, destroyObj);
 
     }
-    public void DestroyProjectile(Define.Property property, GameObject destroyObj)
+    public void DestroyProjectile(Define.Properties property, GameObject destroyObj)
     {
 
         //UnityEngine.Object.Destroy(destroyObj);
@@ -103,6 +101,47 @@ public class ResourceManager
         //MonsterMove.Invoke();
     }
 
+
+
     // Start is called before the first frame update
-   
+    Dictionary<string, UnityEngine.Object> Pool = new Dictionary<string, UnityEngine.Object>();
+
+    public T Load<T>(string path) where T : UnityEngine.Object
+    {
+        if (!Pool.ContainsKey(path))
+        {
+            Pool.Add(path, Resources.Load<T>(path));
+        }
+
+        return Pool[path] as T;
+    }
+
+    /// <summary> GameObject 생성 </summary>
+    public GameObject Instantiate(string path, Transform parent = null) => Instantiate<GameObject>(path, parent);
+    /// <summary> T type object 생성 </summary>
+    public T Instantiate<T>(string path, Transform parent = null) where T : UnityEngine.Object
+    {
+        T prefab = Load<T>($"Prefabs/{path}");
+        if (prefab == null)
+        {
+            Debug.LogError($"Failed to load prefab : {path}");
+            return null;
+        }
+
+        T instance = UnityEngine.Object.Instantiate<T>(prefab, parent);
+        instance.name = prefab.name;
+
+        return instance;
+    }
+    public void Destroy(GameObject go)
+    {
+        if (go == null)
+            return;
+
+        UnityEngine.Object.Destroy(go);
+    }
+    public void Clear()
+    {
+        Pool.Clear();
+    }
 }

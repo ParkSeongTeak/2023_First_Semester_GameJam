@@ -15,30 +15,18 @@ public class EndPoint : MonoBehaviour
             {
                 GameManager.Sound.Play("Effect/life1");
 
-                GameManager.Instance.Life -= 1;
-
+                //GameManager.Instance.Life -= 1;
+                //
+                //GameManager.UI.ShowSceneUI<GameUI>().MinusLife();
 
             }
             
 
             collision.gameObject.GetComponent<Monster_Controller>().Dead();
-            //Destroy(collision.gameObject.GetComponent<Monster_Controller>());
-            Destroy(collision.gameObject);
-            GameManager.UI.PointUpdate();
-
-            //HelloWorld = StartCoroutine(Play());
-
-
-            //StopCoroutine(HelloWorld);
-
+            
+            GameManager.UI.ShowSceneUI<GameUI>().UpdateData();
 
         }
     }
-    IEnumerator Play()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(1.0f);
-        }
-    }
+    
 }

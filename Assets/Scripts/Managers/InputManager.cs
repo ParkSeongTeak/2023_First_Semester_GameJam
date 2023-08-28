@@ -13,7 +13,7 @@ public class InputManager
 
 
 
-    public void init()
+    public void Init()
     {
 
     }

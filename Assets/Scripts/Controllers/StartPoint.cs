@@ -11,10 +11,12 @@ public class StartPoint : MonoBehaviour
     int thisWaveNum = 0;
     GameObject startPosition;
 
+    public static Vector3 StartPos { get; set; }
+
     private void Start()
     {
         startPosition = GameObject.Find("ReMonster");
-        
+        StartPos = transform.position;
         StartCoroutine(MonsterWave());
         //GameManager.Input.KeyAction += MonsterRegen;
     }
@@ -26,8 +28,9 @@ public class StartPoint : MonoBehaviour
     {
         int MonsterIDX = Random.Range(0, 3);
         
-        GameObject mob = GameManager.Resource.InstantiateMonster((Define.Property)MonsterIDX);
-        mob.transform.position = startPosition.transform.position;
+        GameObject mob = GameManager.Resource.InstantiateMonster((Define.Properties)MonsterIDX);
+        //mob.GetComponent<Monster_Controller>().checkBox = 0;
+        mob.transform.position = StartPos;
     }
 
     IEnumerator MonsterWave()

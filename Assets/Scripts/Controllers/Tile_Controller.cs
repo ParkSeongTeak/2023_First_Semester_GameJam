@@ -18,7 +18,7 @@ public class Tile_Controller : MonoBehaviour
 
     public GameObject Tower { get { return _tower; } }
     public GameObject Skill { get { return _skill; } }
-    public void InstanceTower(Define.Property property)
+    public void InstanceTower(Define.Properties property)
     {
 
         _tower = Instantiate(GameManager.Instance.Tower[(int)property]);
@@ -26,7 +26,7 @@ public class Tile_Controller : MonoBehaviour
 
         _tower.transform.localPosition = new Vector3(0,0,0);
     }
-    public void InstanceSkill(Define.Skill property)
+    public void InstanceSkill(Define.Skills property)
     {
         _skill = Instantiate(GameManager.Instance.Skills[(int)property]);
         
