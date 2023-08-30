@@ -59,20 +59,7 @@ public class Monster_Controller : MonoBehaviour
     /// <summary> 나의 현재 HP </summary>
     public float HP { get { return _HP;} set { _HP = value; } }
     public LinkedList<GameObject> inRangeTower = new LinkedList<GameObject>();
-    public void RemoveNode(GameObject value)
-    {
-        LinkedListNode<GameObject> node = inRangeTower.First; // 리스트의 처음부터 시작
-
-        while (node != null)
-        {
-            if (node.Value.Equals(value)) // 원하는 값을 찾으면
-            {
-                inRangeTower.Remove(node); // 해당 노드 삭제
-                break;
-            }
-            node = node.Next; // 다음 노드로 이동
-        }
-    }
+    
 
     void RemoveAll()
     {
@@ -80,7 +67,7 @@ public class Monster_Controller : MonoBehaviour
 
         while (node != null)
         {
-            node.Value.GetComponent<T_Controller>().RemoveNode(gameObject);
+            node.Value.GetComponent<T_Controller>().RemoveMonster(gameObject);
 
             //if (node.Value.Equals(value)) // 원하는 값을 찾으면
             //{
@@ -107,10 +94,10 @@ public class Monster_Controller : MonoBehaviour
         nullCount = 0;
         _checkBox = 0;
         dist = 0;
-        transform.position = GameManager.Instance.StartPoint.transform.position;
-        _bornproperty = _property;
+        transform.position = StartPoint.StartPos;
+        
         checkBox = 0;
-        HP = GameManager.Instance.StartHP + (GameManager.Instance.Wave - 1) * (GameManager.Instance.Wave - 1) * (GameManager.Instance.WaveHPPlus);
+        HP = GameManager.Data.StartHP + (GameManager.Data.Wave - 1) * (GameManager.Data.Wave - 1) * (GameManager.Data.WaveHPPlus)*(1.0f + GameManager.Data.Wave/15.0f) * (1.0f + GameManager.Data.Wave / 15.0f);
 
 
     }
@@ -118,7 +105,7 @@ public class Monster_Controller : MonoBehaviour
 
     public void beAttacked( Define.Properties Property) //데미지, 투사체 속성
     {
-        float DMG = GameManager.DMGTABLE[GameManager.Instance.LV[(int)Property]];
+        float DMG = GameManager.Data.DMGTABLE[GameManager.Data.LV[(int)Property]];
         
 
         //속성 검사
@@ -188,8 +175,8 @@ public class Monster_Controller : MonoBehaviour
                     break;
 
             }
-            GameManager.Instance.Money += GameManager.Instance.Wave * 2;
-            GameManager.Instance.NowPoint += 1;
+            GameManager.Data.Money += GameManager.Data.Wave * 2;
+            GameManager.Data.NowPoint += 1;
         }
         RemoveAll();
         transform.position = StartPoint.StartPos;
@@ -198,7 +185,7 @@ public class Monster_Controller : MonoBehaviour
         _speed = 0;
         stickyCount = 0;
         nullCount = 0;
-        GameManager.Resource.DestroyMonster(_property, this.gameObject);
+        GameManager.Resource.DestroyMonster(_bornproperty, this.gameObject);
     }
 
     // Start is called before the first frame update
@@ -207,10 +194,10 @@ public class Monster_Controller : MonoBehaviour
         pooling = 0;
         if(direction == null)
         {
-            direction = GameManager.Instance.Direction;
+            direction = GameManager.Data.Direction;
 
         }
-
+        _bornproperty = _property;
         Transform MonsterPool;
         string name = $"Monster{Enum.GetName(typeof(Define.Properties), _property)}";
         GameManager.Pooling.PoolingRoot.TryGetValue(name, out MonsterPool);

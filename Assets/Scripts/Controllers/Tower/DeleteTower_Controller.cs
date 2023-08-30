@@ -16,7 +16,7 @@ public class DeleteTower_Controller : MonoBehaviour
         if (DeleteTower != null && DeleteTower == gameObject)
         {
             GameManager.Sound.Play("Effect/tower_wajang_chang");
-            GameManager.Instance.Money += 10;
+            GameManager.Data.Money += 10;
             transform.parent.GetComponent<T_Controller>().SelfDestroy();
         }
     }

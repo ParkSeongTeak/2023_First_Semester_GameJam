@@ -19,12 +19,14 @@ public class Help : UI_PopUp
     {
         base.Init();
         Bind<Button>(typeof(Buttons));
+        GameManager.Pause();
         BindEvent(GetButton((int)Buttons.Help).gameObject, Btn_Help);
 
     }
 
     void Btn_Help(PointerEventData data)
     {
+        GameManager.UnPause();
         GameManager.UI.ClosePopupUI();
     }
 

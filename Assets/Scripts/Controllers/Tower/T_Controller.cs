@@ -7,11 +7,9 @@ public class T_Controller : MonoBehaviour
     float FullDist_x, FullDist_y,FullDist;
     GameObject Projectile;
     Vector3 target;
-    public LinkedList<GameObject> inRangeMonster { get; set; } = new LinkedList<GameObject>();
-    public void RemoveNode(GameObject value)
-    {
-        inRangeMonster.Remove(value);
-    }
+    //public LinkedList<GameObject> inRangeMonster = new LinkedList<GameObject>();
+    public List<GameObject> inRangeMonster = new List<GameObject>();
+
     bool isDelay;
 
     [SerializeField]
@@ -21,7 +19,7 @@ public class T_Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _direction = GameManager.Instance.Direction;
+        _direction = GameManager.Data.Direction;
         Projectile = Resources.Load<GameObject>($"Prefabs/Projectile/Projectile{(int)property}");
         isDelay = false;
         StartCoroutine(ContinueShoot());
@@ -35,40 +33,30 @@ public class T_Controller : MonoBehaviour
     }
     public void AddMonster(GameObject Monster)
     {
-        inRangeMonster.AddLast(Monster);
+        //inRangeMonster.AddLast(Monster);
+        inRangeMonster.Add(Monster);
     }
 
 
-
-    public Vector3 NearestMonster()
-    {
-        FullDist_x = Mathf.Abs(_direction[1].x - _direction[2].x) * 4;
-        FullDist_y = Mathf.Abs(_direction[0].y - _direction[1].y) * 4;
-        FullDist = FullDist_x + FullDist_y + Mathf.Abs(GameObject.Find("StartPoint").transform.position.x - GameObject.Find("EndPoint").transform.position.x);
-
-
-        if (inRangeMonster.Count == 0)
-        {
-            target = this.transform.position;
-            return target;
-        }
-
-        return target;
-    }
-   
     IEnumerator ContinueShoot()
     {
         while (true)
         {
             if (isDelay == false && inRangeMonster.Count > 0)
             {
-                Debug.Log("inRangeMonster.Count   "+inRangeMonster.Count);
+                //Debug.Log("inRangeMonster.Count   "+inRangeMonster.Count);
                 isDelay = true;
-                if (inRangeMonster.First.Value != null)
+                if (inRangeMonster[0] != null)
                 {
+                    if (!inRangeMonster[0].activeSelf)
+                    {
+                        RemoveMonster(inRangeMonster[0]);
+                        continue;
+                    }
                     GameObject go = GameManager.Resource.InstantiateProjectile(property);
                     go.transform.position = this.transform.position;
-                    go.GetComponent<Projectile_Controller>().setTarget(inRangeMonster.First.Value.transform.position);
+                    //go.GetComponent<Projectile_Controller>().setTarget(inRangeMonster.First.Value.transform.position);
+                    go.GetComponent<Projectile_Controller>().setTarget(inRangeMonster[0].transform.position);
                     go.SetActive(true);
                     GameManager.Sound.Play("Effect/gun2");
 
@@ -79,12 +67,12 @@ public class T_Controller : MonoBehaviour
                 }
 
                 
-                yield return new WaitForSeconds(GameManager.SHOOTSPEED[GameManager.Instance.LV[(int)Define.LV.AttackSpeed]]);
+                yield return new WaitForSeconds(GameManager.Data.SHOOTSPEED[GameManager.Data.LV[(int)Define.LV.AttackSpeed]]);
                 isDelay = false;
             }
             else
             {
-                yield return new WaitForSeconds(GameManager.SHOOTSPEED[GameManager.Instance.LV[(int)Define.LV.AttackSpeed]]);
+                yield return new WaitForSeconds(GameManager.Data.SHOOTSPEED[GameManager.Data.LV[(int)Define.LV.AttackSpeed]]);
             }
         }
     } 

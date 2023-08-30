@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SoundManager
@@ -43,10 +44,13 @@ public class SoundManager
                 }
 
                 _audioSources[(int)Define.Sounds.BGM].loop = true;
-
             }
+
+            SetAudioSourceVolume(PlayerPrefs.GetFloat("BGMVol", 1f), Define.Sounds.BGM);
+            SetAudioSourceVolume(PlayerPrefs.GetFloat("EffectVol", 1f), Define.Sounds.SFX);
+
         }
-        
+
     }
     public void SetVolume(Define.Sounds type, float volume)
     {

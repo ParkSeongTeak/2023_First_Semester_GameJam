@@ -21,14 +21,14 @@ public class Tile_Controller : MonoBehaviour
     public void InstanceTower(Define.Properties property)
     {
 
-        _tower = Instantiate(GameManager.Instance.Tower[(int)property]);
+        _tower = Instantiate(GameManager.Data.Tower[(int)property]);
         _tower.transform.parent = transform;
 
         _tower.transform.localPosition = new Vector3(0,0,0);
     }
     public void InstanceSkill(Define.Skills property)
     {
-        _skill = Instantiate(GameManager.Instance.Skills[(int)property]);
+        _skill = Instantiate(GameManager.Data.Skills[(int)property]);
         
         _skill.transform.parent = transform;
         _skill.GetComponent<SkillTile>().SkillExistTime();

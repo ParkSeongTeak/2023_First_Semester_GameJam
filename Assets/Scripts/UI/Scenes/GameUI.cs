@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -68,12 +67,7 @@ public class GameUI : UI_Scene
 
     Sprite fullLife;
     Sprite emptyLife;
-    void Start()
-    {
-        Init();
-    }
-
-
+    
     public override void Init()
     {
         base.Init();
@@ -300,15 +294,15 @@ public class GameUI : UI_Scene
         if (toggle_AttackSpeed)
         {
             int AttackSpeedToLv = (int)Define.LV.AttackSpeed;
-            if (GameManager.Instance.LV[AttackSpeedToLv] < 4 && (GameManager.Instance.Money >= GameManager.UPGRATECOST[GameManager.Instance.LV[AttackSpeedToLv]]))
+            if (GameManager.Data.LV[AttackSpeedToLv] < 4 && (GameManager.Data.Money >= GameManager.Data.UPGRATECOST[GameManager.Data.LV[AttackSpeedToLv]]))
             {
-                GameManager.Instance.Money -= GameManager.UPGRATECOST[GameManager.Instance.LV[AttackSpeedToLv]];
-                GameManager.Instance.LV[AttackSpeedToLv] += 1;
+                GameManager.Data.Money -= GameManager.Data.UPGRATECOST[GameManager.Data.LV[AttackSpeedToLv]];
+                GameManager.Data.LV[AttackSpeedToLv] += 1;
 
                 GameManager.UI.ShowSceneUI<GameUI>()?.UpdateData();
 
-                GetImage((int)Images.AttackSpeed_LV).sprite = GameManager.Resource.Load<Sprite>($"Sprite/UI/9_LV{GameManager.Instance.LV[AttackSpeedToLv] + 1}");
-                GetText((int)Texts.AttackSpeedTxt).text = $"{GameManager.UPGRATECOST[GameManager.Instance.LV[AttackSpeedToLv]]}";
+                GetImage((int)Images.AttackSpeed_LV).sprite = GameManager.Resource.Load<Sprite>($"Sprite/UI/9_LV{GameManager.Data.LV[AttackSpeedToLv] + 1}");
+                GetText((int)Texts.AttackSpeedTxt).text = $"{GameManager.Data.UPGRATECOST[GameManager.Data.LV[AttackSpeedToLv]]}";   
 
             }
         }
@@ -322,15 +316,15 @@ public class GameUI : UI_Scene
         if (toggle_Money)
         {
             int MoneyToLv = (int)Define.LV.Money;
-            if (GameManager.Instance.LV[MoneyToLv] < 4 && (GameManager.Instance.Money >= GameManager.UPGRATECOST[GameManager.Instance.LV[MoneyToLv]]))
+            if (GameManager.Data.LV[MoneyToLv] < 4 && (GameManager.Data.Money >= GameManager.Data.UPGRATECOST[GameManager.Data.LV[MoneyToLv]]))
             {
-                GameManager.Instance.Money -= GameManager.UPGRATECOST[GameManager.Instance.LV[MoneyToLv]];
-                GameManager.Instance.LV[MoneyToLv] += 1;
+                GameManager.Data.Money -= GameManager.Data.UPGRATECOST[GameManager.Data.LV[MoneyToLv]];
+                GameManager.Data.LV[MoneyToLv] += 1;
 
                 GameManager.UI.ShowSceneUI<GameUI>()?.UpdateData();
 
-                GetImage((int)Images.Money_LV).sprite = GameManager.Resource.Load<Sprite>($"Sprite/UI/9_LV{GameManager.Instance.LV[MoneyToLv] + 1}");
-                GetText((int)Texts.MoneyTxt).text = $"{GameManager.UPGRATECOST[GameManager.Instance.LV[MoneyToLv]]}";
+                GetImage((int)Images.Money_LV).sprite = GameManager.Resource.Load<Sprite>($"Sprite/UI/9_LV{GameManager.Data.LV[MoneyToLv] + 1}");
+                GetText((int)Texts.MoneyTxt).text = $"{GameManager.Data.UPGRATECOST[GameManager.Data.LV[MoneyToLv]]}";
 
             }
         }
@@ -356,15 +350,15 @@ public class GameUI : UI_Scene
         {
             Debug.Log("InSkillUpgrade");
             int SkillToLv = (int)skill + (int)Define.LV.Explosion;
-            if (GameManager.Instance.LV[SkillToLv] < 4 && (GameManager.Instance.Money >= GameManager.UPGRATECOST[GameManager.Instance.LV[SkillToLv]]))
+            if (GameManager.Data.LV[SkillToLv] < 4 && (GameManager.Data.Money >= GameManager.Data.UPGRATECOST[GameManager.Data.LV[SkillToLv]]))
             {
-                GameManager.Instance.Money -= GameManager.UPGRATECOST[GameManager.Instance.LV[SkillToLv]];
-                GameManager.Instance.LV[SkillToLv] += 1;
+                GameManager.Data.Money -= GameManager.Data.UPGRATECOST[GameManager.Data.LV[SkillToLv]];
+                GameManager.Data.LV[SkillToLv] += 1;
 
                 GameManager.UI.ShowSceneUI<GameUI>()?.UpdateData();
 
-                GetImage((int)Images.Skill_Explosion_LV + (int)skill).sprite = GameManager.Resource.Load<Sprite>($"Sprite/UI/9_LV{GameManager.Instance.LV[SkillToLv] + 1}");
-                GetText((int)Texts.Skill_ExplosionTxt + (int)skill).text = $"{GameManager.UPGRATECOST[GameManager.Instance.LV[SkillToLv]]}";
+                GetImage((int)Images.Skill_Explosion_LV + (int)skill).sprite = GameManager.Resource.Load<Sprite>($"Sprite/UI/9_LV{GameManager.Data.LV[SkillToLv] + 1}");
+                GetText((int)Texts.Skill_ExplosionTxt + (int)skill).text = $"{GameManager.Data.UPGRATECOST[GameManager.Data.LV[SkillToLv]]}";
                 
             }
         }
@@ -380,17 +374,17 @@ public class GameUI : UI_Scene
         if (toggle_Tower[(int)tower])
         {
             int TowerToLv = (int)tower + (int)Define.LV.Fire;
-            if (GameManager.Instance.LV[TowerToLv] < 4 && (GameManager.Instance.Money >= GameManager.UPGRATECOST[GameManager.Instance.LV[TowerToLv]]))
+            if (GameManager.Data.LV[TowerToLv] < 4 && (GameManager.Data.Money >= GameManager.Data.UPGRATECOST[GameManager.Data.LV[TowerToLv]]))
             {
                 GameManager.Sound.Play("Effect/levelup1");
 
-                GameManager.Instance.Money -= GameManager.UPGRATECOST[GameManager.Instance.LV[TowerToLv]];
-                GameManager.Instance.LV[TowerToLv] += 1;
+                GameManager.Data.Money -= GameManager.Data.UPGRATECOST[GameManager.Data.LV[TowerToLv]];
+                GameManager.Data.LV[TowerToLv] += 1;
 
                 GameManager.UI.ShowSceneUI<GameUI>()?.UpdateData();
 
-                GetImage((int)Images.Tower_Fire_LV + (int)tower).sprite = GameManager.Resource.Load<Sprite>($"Sprite/UI/9_LV{GameManager.Instance.LV[TowerToLv] + 1}");
-                GetText((int)Texts.Tower_FireTxt + (int)tower).text = $"{GameManager.UPGRATECOST[GameManager.Instance.LV[TowerToLv]]}";
+                GetImage((int)Images.Tower_Fire_LV + (int)tower).sprite = GameManager.Resource.Load<Sprite>($"Sprite/UI/9_LV{GameManager.Data.LV[TowerToLv] + 1}");
+                GetText((int)Texts.Tower_FireTxt + (int)tower).text = $"{GameManager.Data.UPGRATECOST[GameManager.Data.LV[TowerToLv]]}";
 
             }
         }
@@ -401,7 +395,7 @@ public class GameUI : UI_Scene
     }
     void Skill_DragStart(Define.Skills skill)
     {
-        if (GameManager.Instance.Money >= _skillConst[(int)skill])
+        if (GameManager.Data.Money >= _skillConst[(int)skill])
         {
             UiImage = GameManager.Resource.Load<GameObject>($"Prefabs/UI/{System.Enum.GetName(typeof(Define.Skills),skill)}_Drag_UI");
             UiDragImage = Instantiate(UiImage, this.transform.position, Quaternion.identity, transform);
@@ -428,9 +422,9 @@ public class GameUI : UI_Scene
         {
             GameObject tile = GameManager.Input.GetClicked2DObject(((1 << 7) + (1 << 8)));
 
-            if (tile != null && (GameManager.Instance.Money >= _skillConst[(int)skill]))
+            if (tile != null && (GameManager.Data.Money >= _skillConst[(int)skill]))
             {
-                GameManager.Instance.Money -= _skillConst[(int)skill];
+                GameManager.Data.Money -= _skillConst[(int)skill];
                 GameManager.UI.ShowSceneUI<GameUI>().UpdateData();
                 tile.GetComponent<Tile_Controller>().InstanceSkill(skill);
                 GameManager.Sound.Play("Effect/button2");
@@ -442,7 +436,7 @@ public class GameUI : UI_Scene
 
     void Tower_DragStart(Define.Properties property)
     {
-        if (GameManager.Instance.Money >= 20)
+        if (GameManager.Data.Money >= 20)
         {
             UiImage = GameManager.Resource.Load<GameObject>($"Prefabs/UI/{System.Enum.GetName(typeof(Define.Properties), property)}T_Drag_UI");
             UiDragImage = Instantiate(UiImage, this.transform.position, Quaternion.identity, transform);
@@ -469,12 +463,12 @@ public class GameUI : UI_Scene
         {
             GameObject tile = GameManager.Input.GetClicked2DObject(1 << 7);
 
-            if (tile != null && (GameManager.Instance.Money >= 20))
+            if (tile != null && (GameManager.Data.Money >= 20))
             {
                 if (tile.transform.GetComponent<Tile_Controller>().TowerNum == 0)
                 {
                     tile.transform.GetComponent<Tile_Controller>().TowerNum += 1;
-                    GameManager.Instance.Money -= 20;
+                    GameManager.Data.Money -= 20;
                     GameManager.UI.ShowSceneUI<GameUI>().UpdateData();
                     tile.GetComponent<Tile_Controller>().InstanceTower(property);
                     GameManager.Sound.Play("Effect/tower_getto_daze");
@@ -488,10 +482,19 @@ public class GameUI : UI_Scene
 
     public void UpdateData()
     {
-        GetText((int)Texts.WaveNum).text = $"{GameManager.Instance.Wave} WAVE";
-        GetText((int)Texts.NowPoint).text = $"SCORE: {GameManager.Instance.NowPoint}";
-        GetText((int)Texts.MaxPoint).text = $"BEST SCORE: {GameManager.Instance.MaxPoint}";
-        GetText((int)Texts.MoneyPoint).text = $"{(int)GameManager.Instance.Money}";
+        if(GetText((int)Texts.WaveNum) == null)
+        {
+            Debug.Log("(int)Texts.WaveNum");
+        } 
+        if(GameManager.Data.Wave == null)
+        {
+            Debug.Log("GameManager.Data.Wave == null");
+
+        }
+        GetText((int)Texts.WaveNum).text = $"{GameManager.Data.Wave} WAVE";
+        GetText((int)Texts.NowPoint).text = $"SCORE: {GameManager.Data.NowPoint}";
+        GetText((int)Texts.MaxPoint).text = $"BEST SCORE: {GameManager.Data.MaxPoint}";
+        GetText((int)Texts.MoneyPoint).text = $"{(int)GameManager.Data.Money}";
 
     }
 

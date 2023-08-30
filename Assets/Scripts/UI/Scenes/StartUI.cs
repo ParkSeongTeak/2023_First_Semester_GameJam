@@ -17,6 +17,7 @@ public class StartUI : UI_Scene
 
     void Start()
     {
+        Debug.Log("???");
         Init();
     }
 
@@ -40,10 +41,13 @@ public class StartUI : UI_Scene
     }
     void Btn_ToGameScene(PointerEventData evt)
     {
+        Debug.Log("Click");
         GameManager.Scene.LoadScene(Define.Scenes.Game);
     }
     void Btn_ExitApp(PointerEventData evt)
     {
+        Debug.Log("???????");
+
         GameManager.QuitApp();
     }
     #endregion Btn

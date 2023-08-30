@@ -31,7 +31,7 @@ public class MonsterBound : MonoBehaviour
             Debug.Log("Exit");
 
             collision.GetComponent<T_Controller>().RemoveMonster(monster.gameObject);
-            monster.RemoveNode(collision.gameObject);
+            //monster.RemoveNode(collision.gameObject);
 
         }
 

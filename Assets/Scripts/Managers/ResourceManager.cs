@@ -30,15 +30,6 @@ public class ResourceManager
         {
             _projectile[i] = Resources.Load<GameObject>($"Prefabs/Projectile/Projectile{i}");
 
-            if(_projectile[i] == null)
-            {
-                Debug.Log($"À½½¿{i}");
-            }
-            else
-            {
-                Debug.Log($"{_projectile[i].name}");
-
-            }
         }
     }
     public GameObject InstantiateMonster(Define.Properties property)

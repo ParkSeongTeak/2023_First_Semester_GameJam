@@ -15,9 +15,9 @@ public class EndPoint : MonoBehaviour
             {
                 GameManager.Sound.Play("Effect/life1");
 
-                //GameManager.Instance.Life -= 1;
-                //
-                //GameManager.UI.ShowSceneUI<GameUI>().MinusLife();
+                GameManager.Data.Life -= 1;
+                
+                GameManager.UI.ShowSceneUI<GameUI>().MinusLife();
 
             }
             

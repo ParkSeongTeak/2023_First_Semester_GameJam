@@ -41,18 +41,6 @@ public class UIManager
     int idx = 0;
 
 
-    public void PointUpdate()
-    {
-        _textFields[(int)TextEnum.WavePoint].text = $"{GameManager.Instance.Wave} WAVE";
-        _textFields[(int)TextEnum.NowPoint].text = $"SCORE: {GameManager.Instance.NowPoint}";
-        _textFields[(int)TextEnum.MaxPoint].text = $"BEST SCORE: {GameManager.Instance.MaxPoint}";
-        _textFields[(int)TextEnum.MoneyPoint].text = $"{(int)GameManager.Instance.Money}";
-        
-
-    }
-    
-    
-
 
     /////////////////////////////////////////////////////////////////
 

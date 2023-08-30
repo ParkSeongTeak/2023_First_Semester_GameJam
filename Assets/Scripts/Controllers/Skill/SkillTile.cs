@@ -13,7 +13,7 @@ public class SkillTile : MonoBehaviour
     public void InstanceSkill(Define.Skills skill)// 위 함수는 Tile_Controller에 가는게 맞습니다
     {
 
-        Skill = Instantiate(GameManager.Instance.Skills[(int)skill]);
+        Skill = Instantiate(GameManager.Data.Skills[(int)skill]);
         Skill.transform.parent = transform;
 
         Skill.transform.localPosition = new Vector3(0, 0, 0);
@@ -43,16 +43,6 @@ public class SkillTile : MonoBehaviour
     {
         if (other.gameObject.tag == "Mob")//몬스터이고
         {
-            /*
-            float range = Vector3.Magnitude(this.gameObject.transform.position - other.gameObject.transform.position);
-            if (range <= GameManager.SkillRange)//3*3범위 내인가?
-            {
-                gameObject.GetComponent<ResourceManager>().InAreaMonster_List.Add(other.gameObject);
-            }
-            */
-
-            // 그냥 Skill타일 Collider의 크기를 3*3 크기로 함
-
             switch (Myskill) {
 
                 case Define.Skills.Explosion:
@@ -120,8 +110,8 @@ public class SkillTile : MonoBehaviour
     }
     IEnumerator ExistTime()
     {
-        Debug.Log($"LV[{(int)Myskill + 5}] : {GameManager.Instance.LV[(int)Myskill + 5]} time: {GameManager.SKILLEXISTTIME[GameManager.Instance.LV[(int)Myskill + 5]]}");
-        yield return new WaitForSeconds(Myskill == Define.Skills.Explosion ? 0.4f : GameManager.SKILLEXISTTIME[GameManager.Instance.LV[(int)Myskill + 5]]);
+        Debug.Log($"LV[{(int)Myskill + 5}] : {GameManager.Data.LV[(int)Myskill + 5]} time: {GameManager.Data.SKILLEXISTTIME[GameManager.Data.LV[(int)Myskill + 5]]}");
+        yield return new WaitForSeconds(Myskill == Define.Skills.Explosion ? 0.4f : GameManager.Data.SKILLEXISTTIME[GameManager.Data.LV[(int)Myskill + 5]]);
 
         Destroy(this.gameObject);
     }

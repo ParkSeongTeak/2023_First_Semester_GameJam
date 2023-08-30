@@ -6,28 +6,39 @@ using UnityEngine;
 
 public class PoolingManager
 {
-    Dictionary<string, Transform> _poolingRoot = new Dictionary<string, Transform>();
-    public Dictionary<string, Transform> PoolingRoot { get { return _poolingRoot; } } 
+    Dictionary<string, Transform> _poolingRoot;
+    public Dictionary<string, Transform> PoolingRoot { get { return _poolingRoot; } }
 
-    Dictionary<string, Stack<GameObject>> _pool = new Dictionary<string, Stack<GameObject>>();
-    Dictionary<Define.Properties, string> _projectileNameForPool = new Dictionary<Define.Properties, string>();
-    Dictionary<Define.Properties, string> _monsterNameForPool = new Dictionary<Define.Properties, string>();
+    Dictionary<string, Stack<GameObject>> _pool;
+    static Dictionary<Define.Properties, string> _projectileNameForPool { get; set; }
+    static Dictionary<Define.Properties, string> _monsterNameForPool { get; set; }
 
     GameObject root = null;
 
     public void Init()
     {
-        
+        _poolingRoot = new Dictionary<string, Transform>();
+        _pool = new Dictionary<string, Stack<GameObject>>();
         if (root == null )
         {
+            if(_projectileNameForPool == null)
+            {
+                _projectileNameForPool = new Dictionary<Define.Properties, string>();
+                _projectileNameForPool.Add(Define.Properties.Fire, "MonsterFire");
+                _projectileNameForPool.Add(Define.Properties.Water, "MonsterWater");
+                _projectileNameForPool.Add(Define.Properties.Grass, "MonsterGrass");
 
-            _projectileNameForPool.Add(Define.Properties.Fire, "MonsterFire");
-            _projectileNameForPool.Add(Define.Properties.Water, "MonsterWater");
-            _projectileNameForPool.Add(Define.Properties.Grass, "MonsterGrass");
+            }
+            if (_monsterNameForPool == null)
+            {
+                _monsterNameForPool = new Dictionary<Define.Properties, string>();
+                _monsterNameForPool.Add(Define.Properties.Fire, "ProjectileFire");
+                _monsterNameForPool.Add(Define.Properties.Water, "ProjectileWater");
+                _monsterNameForPool.Add(Define.Properties.Grass, "ProjectileGrass");
+            }
 
-            _monsterNameForPool.Add(Define.Properties.Fire, "ProjectileFire");
-            _monsterNameForPool.Add(Define.Properties.Water, "ProjectileWater");
-            _monsterNameForPool.Add(Define.Properties.Grass, "ProjectileGrass");
+
+
 
 
             root =  new GameObject ("root");
@@ -83,8 +94,6 @@ public class PoolingManager
 
             Play.transform.parent = root.transform;
 
-
-
         }
 
     }
@@ -108,8 +117,6 @@ public class PoolingManager
     }
     public GameObject GetPoolProjectile(Define.Properties property)
     {
-
-
         string name = $"Projectile{Enum.GetName(typeof(Define.Properties), property)}";
 
         if (_pool[name].Count == 0)
@@ -118,7 +125,6 @@ public class PoolingManager
         }
         else
         {
-
             return _pool[name].Pop();
         }
     }
