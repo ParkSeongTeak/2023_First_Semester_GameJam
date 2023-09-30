@@ -1,4 +1,4 @@
-//스터터링 문제 확인 중
+//Checking for stuttering issues
 #define Pooling
 
 using System;
