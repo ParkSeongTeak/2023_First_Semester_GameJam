@@ -10,8 +10,9 @@ public class T_Controller : MonoBehaviour
     //public LinkedList<GameObject> inRangeMonster = new LinkedList<GameObject>();
     public List<GameObject> inRangeMonster = new List<GameObject>();
 
+    static string Effectgun2 = "Effect/gun2";
+    static WaitForSeconds[] SHOOTSPEED;
     bool isDelay;
-
     [SerializeField]
     Define.Properties property = Define.Properties.Fire;
 
@@ -22,7 +23,20 @@ public class T_Controller : MonoBehaviour
         _direction = GameManager.Data.Direction;
         Projectile = Resources.Load<GameObject>($"Prefabs/Projectile/Projectile{(int)property}");
         isDelay = false;
+        
+        if (SHOOTSPEED == null)
+        {
+            SHOOTSPEED = new WaitForSeconds[5];
+            for (int i = 0; i < 5; i++)
+            {
+                SHOOTSPEED[i] = new WaitForSeconds(GameManager.Data.SHOOTSPEED[i]);
+
+            }
+        }
+
         StartCoroutine(ContinueShoot());
+
+        
 
     }
 
@@ -33,7 +47,6 @@ public class T_Controller : MonoBehaviour
     }
     public void AddMonster(GameObject Monster)
     {
-        //inRangeMonster.AddLast(Monster);
         inRangeMonster.Add(Monster);
     }
 
@@ -44,7 +57,6 @@ public class T_Controller : MonoBehaviour
         {
             if (isDelay == false && inRangeMonster.Count > 0)
             {
-                //Debug.Log("inRangeMonster.Count   "+inRangeMonster.Count);
                 isDelay = true;
                 if (inRangeMonster[0] != null)
                 {
@@ -55,24 +67,19 @@ public class T_Controller : MonoBehaviour
                     }
                     GameObject go = GameManager.Resource.InstantiateProjectile(property);
                     go.transform.position = this.transform.position;
-                    //go.GetComponent<Projectile_Controller>().setTarget(inRangeMonster.First.Value.transform.position);
                     go.GetComponent<Projectile_Controller>().setTarget(inRangeMonster[0].transform.position);
                     go.SetActive(true);
-                    GameManager.Sound.Play("Effect/gun2");
+                    GameManager.Sound.Play(Effectgun2);
 
-                }
-                else
-                {
-                    Debug.Log("NUL???");
                 }
 
                 
-                yield return new WaitForSeconds(GameManager.Data.SHOOTSPEED[GameManager.Data.LV[(int)Define.LV.AttackSpeed]]);
+                yield return SHOOTSPEED[GameManager.Data.LV[(int)Define.LV.AttackSpeed]];
                 isDelay = false;
             }
             else
             {
-                yield return new WaitForSeconds(GameManager.Data.SHOOTSPEED[GameManager.Data.LV[(int)Define.LV.AttackSpeed]]);
+                yield return SHOOTSPEED[GameManager.Data.LV[(int)Define.LV.AttackSpeed]];
             }
         }
     } 

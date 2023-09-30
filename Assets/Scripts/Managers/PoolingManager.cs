@@ -1,8 +1,12 @@
+//스터터링 문제 확인 중
+#define Pooling
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+
 
 public class PoolingManager
 {
@@ -37,14 +41,7 @@ public class PoolingManager
                 _monsterNameForPool.Add(Define.Properties.Grass, "ProjectileGrass");
             }
 
-
-
-
-
             root =  new GameObject ("root");
-
-
-
 
             GameObject Monster = new GameObject ("MonsterFire" );
             _poolingRoot.Add("MonsterFire", Monster.transform);
@@ -100,65 +97,58 @@ public class PoolingManager
 
     public GameObject GetPoolMonster(Define.Properties property)
     {
-        
-
-        string name = $"Monster{Enum.GetName(typeof(Define.Properties), property)}";
-
-        if (_pool[name].Count == 0)
+        if (_pool[_monsterNameForPool[property]].Count == 0)
         {
             return null;
         }
         else
         {
-            GameObject pool = _pool[name].Pop();
+            GameObject pool = _pool[_monsterNameForPool[property]].Pop();
             return pool;
         }
 
     }
     public GameObject GetPoolProjectile(Define.Properties property)
-    {
-        string name = $"Projectile{Enum.GetName(typeof(Define.Properties), property)}";
-
-        if (_pool[name].Count == 0)
+    { 
+        
+        if (_pool[_projectileNameForPool[property]].Count == 0)
         {
             return null;
         }
         else
         {
-            return _pool[name].Pop();
+            return _pool[_projectileNameForPool[property]].Pop();
         }
     }
     public void SetPoolMonster(Define.Properties property, GameObject destroyObj)
     {
 
-        //실험용 시스템
-        //UnityEngine.Object.Destroy(destroyObj);
-        //return;
-
+#if Pooling
         Transform MonsterPool;
 
-        string name = $"Monster{Enum.GetName(typeof(Define.Properties), property) }";
-        _poolingRoot.TryGetValue(name, out MonsterPool);
-        //destroyObj.transform.parent = MonsterPool;
+        _poolingRoot.TryGetValue(_monsterNameForPool[property], out MonsterPool);
+        
+        _pool[_monsterNameForPool[property]].Push(destroyObj);
+#else
 
-
-        _pool[name].Push(destroyObj);
-
+        UnityEngine.Object.Destroy(destroyObj);
+        return;
+#endif
 
     }
     public void SetPoolProjectile(Define.Properties property, GameObject destroyObj)
     {
-        //실험용 시스템
-        //UnityEngine.Object.Destroy(destroyObj);
-        //return;
-
+#if Pooling
         Transform Projectile;
 
-        string name = $"Projectile{Enum.GetName(typeof(Define.Properties), property) }";
-        _poolingRoot.TryGetValue(name, out Projectile);
+        _poolingRoot.TryGetValue(_projectileNameForPool[property], out Projectile);
         //destroyObj.transform.parent = Projectile;
 
-        _pool[name].Push(destroyObj);
+        _pool[_projectileNameForPool[property]].Push(destroyObj);
+#else
+        UnityEngine.Object.Destroy(destroyObj);
+        return;
+#endif
 
     }
     public void Clear()

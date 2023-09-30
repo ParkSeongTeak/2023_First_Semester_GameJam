@@ -104,7 +104,7 @@ public abstract class UI_Base : MonoBehaviour
                 break;
         }
     }
-
+    /*
     public void SetResolution()
     {
         float setWidth = 1080; // 사용자 설정 너비
@@ -139,5 +139,33 @@ public abstract class UI_Base : MonoBehaviour
             Camera.main.rect = new Rect(0f, (1f - newHeight) / 2f, 1f, newHeight); // 새로운 Rect 적용
             _canvasScaler.matchWidthOrHeight = 0f;
         }
+    }*/
+    public void SetResolution()
+    {
+        float setWidth = 1080; // 사용자 설정 너비
+        float setHeight = 2340; // 사용자 설정 높이
+
+        float deviceWidth = Screen.width; // 기기 너비 저장
+        float deviceHeight = Screen.height; // 기기 높이 저장
+
+        CanvasScaler _canvasScaler;
+        _canvasScaler = GetComponent<CanvasScaler>();
+
+        Screen.SetResolution((int)setWidth, (int)(((float)deviceHeight / deviceWidth) * setWidth), true);
+
+        _canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        _canvasScaler.referenceResolution = new Vector2(setWidth, setHeight);
+        _canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+
+        if (setWidth / setHeight < deviceWidth / deviceHeight)
+        {
+            _canvasScaler.matchWidthOrHeight = 1f;
+        }
+        else
+        {
+            _canvasScaler.matchWidthOrHeight = 0f;
+        }
     }
+
+
 }

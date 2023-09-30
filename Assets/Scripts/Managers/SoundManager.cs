@@ -45,9 +45,10 @@ public class SoundManager
 
                 _audioSources[(int)Define.Sounds.BGM].loop = true;
             }
+            SetVolume(Define.Sounds.BGM, GameManager.Data.BGMVolume);
+            SetVolume(Define.Sounds.SFX, GameManager.Data.SFXVolume);
+            GameManager.Sound.Play("BGM/MainPageBGM", Define.Sounds.BGM);
 
-            SetAudioSourceVolume(PlayerPrefs.GetFloat("BGMVol", 1f), Define.Sounds.BGM);
-            SetAudioSourceVolume(PlayerPrefs.GetFloat("EffectVol", 1f), Define.Sounds.SFX);
 
         }
 

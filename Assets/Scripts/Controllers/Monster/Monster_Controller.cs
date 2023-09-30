@@ -67,13 +67,11 @@ public class Monster_Controller : MonoBehaviour
 
         while (node != null)
         {
-            node.Value.GetComponent<T_Controller>().RemoveMonster(gameObject);
-
-            //if (node.Value.Equals(value)) // 원하는 값을 찾으면
-            //{
-            //    inRangeTower.Remove(node); // 해당 노드 삭제
-            //    break;
-            //}
+            if(node.Value != null)
+            {
+                node.Value.GetComponent<T_Controller>()?.RemoveMonster(gameObject);
+            }
+            
             node = node.Next; // 다음 노드로 이동
         }
     }
@@ -180,7 +178,6 @@ public class Monster_Controller : MonoBehaviour
         }
         RemoveAll();
         transform.position = StartPoint.StartPos;
-        _bornproperty = _property;
         checkBox = 0;
         _speed = 0;
         stickyCount = 0;

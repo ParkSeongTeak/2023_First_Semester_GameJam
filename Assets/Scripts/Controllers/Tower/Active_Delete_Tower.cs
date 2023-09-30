@@ -1,29 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Active_Delete_Tower : MonoBehaviour
 {
-    GameObject _deleteButton;
+    [SerializeField]
+    GameObject _deleteButtonPrefab;
 
+    static Action Action;
+    bool MouseDownMe = false;
     void Start()
     {
-        _deleteButton = transform.parent.Find("Delete").gameObject;
+        Action += DeleteBtnTrue_False;
+        _deleteButtonPrefab.GetComponent<DeleteTower_Controller>().GetTrigger(this);
 
     }
-    void Update()
+
+    private void OnMouseDown()
     {
-        if (Input.GetMouseButtonDown(0))
+        MouseDownMe = true;
+        Action.Invoke();
+    }
+    
+    void DeleteBtnTrue_False()
+    {
+        if (MouseDownMe)
         {
-            GameObject Tower = GameManager.Input.GetClicked2DObject(1 << 11);
-            if (Tower != null && Tower == gameObject)
-            {
-                _deleteButton.SetActive(true);
-            }
-            else if (Tower == null)
-            {
-                _deleteButton.SetActive(false) ;
-            }
+            _deleteButtonPrefab.SetActive(true);
+            MouseDownMe = false;
         }
+        else
+        {
+            _deleteButtonPrefab.SetActive(false);
+        }
+    }
+    public void DeleteAction()
+    {
+        Action -= DeleteBtnTrue_False;
     }
 }

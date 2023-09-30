@@ -123,7 +123,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1932668821211918225}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46af849f1adb23e4b92c6a3b820f428e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inRangeMonster: []
   property: 2
 --- !u!1 &3706841400110851353
 GameObject:
@@ -161,6 +162,7 @@ GameObject:
   - component: {fileID: 3627567629780105140}
   - component: {fileID: 2535075057968706861}
   - component: {fileID: 1983083080390134629}
+  - component: {fileID: 3530665416714906182}
   m_Layer: 9
   m_Name: Delete
   m_TagString: Untagged
@@ -176,7 +178,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3706841400110851353}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0.5, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -273,6 +275,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.775, y: 0.775}
   m_EdgeRadius: 0
+--- !u!50 &3530665416714906182
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3706841400110851353}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &5005641215890441578
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,6 +308,7 @@ GameObject:
   - component: {fileID: 2819642873957219546}
   - component: {fileID: 2897542451180524273}
   - component: {fileID: 2072284312492533574}
+  - component: {fileID: 1688250616524393640}
   m_Layer: 11
   m_Name: DeleteActivate
   m_TagString: Untagged
@@ -300,7 +324,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5005641215890441578}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -397,3 +421,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ade99630ffa45498185470964e80e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _deleteButtonPrefab: {fileID: 3706841400110851353}
+--- !u!50 &1688250616524393640
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5005641215890441578}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

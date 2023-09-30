@@ -5,12 +5,12 @@ using UnityEngine;
 public class StartPoint : MonoBehaviour
 {
     float MonsterToMonster = 1.0f;
-    float WaveToWave = 5.0f;
+    const float WaveToWave = 5.0f;
 
     bool _endWave = true;
     int thisWaveNum = 0;
     GameObject startPosition;
-
+    string Effectwavestart = "Effect/wavestart";
     public static Vector3 StartPos { get; set; }
     private void Awake()
     {
@@ -20,10 +20,7 @@ public class StartPoint : MonoBehaviour
 
     public void StartMonsterWave()
     {
-        //startPosition = GameObject.Find("ReMonster");
-        //StartPos = transform.position;
         StartCoroutine(MonsterWave());
-        //GameManager.Input.KeyAction += MonsterRegen;
     }
     float MonsterToMonsterTime()
     {
@@ -34,9 +31,9 @@ public class StartPoint : MonoBehaviour
         int MonsterIDX = Random.Range(0, 3);
         
         GameObject mob = GameManager.Resource.InstantiateMonster((Define.Properties)MonsterIDX);
-        mob.GetComponent<Monster_Controller>().checkBox = 0;
-        mob.transform.position = StartPos;
     }
+    WaitForSeconds waveToWave = new WaitForSeconds(WaveToWave);
+    WaitForSeconds monsterToMonster = new WaitForSeconds(1.0f);
 
     IEnumerator MonsterWave()
     {
@@ -52,16 +49,17 @@ public class StartPoint : MonoBehaviour
                     GameManager.Data.MonsterHP *= 2;
                 }
                 thisWaveNum = 0;
-                yield return new WaitForSeconds(WaveToWave);
+                yield return waveToWave;
                 
-                GameManager.Sound.Play("Effect/wavestart");
+                GameManager.Sound.Play(Effectwavestart);
 
                 GameManager.Data.Wave += 1;
                 MonsterToMonster = MonsterToMonsterTime();
+                monsterToMonster = new WaitForSeconds(MonsterToMonster);
             }
             else
             {
-                yield return new WaitForSeconds(MonsterToMonster);
+                yield return monsterToMonster;
 
             }
         }

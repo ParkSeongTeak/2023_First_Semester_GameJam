@@ -8,22 +8,12 @@ using UnityEngine.UI;
 
 public class InputManager 
 {
-    Action _keyAction = null;
-    public Action KeyAction { get { return _keyAction; } set { _keyAction = value; } }
-
-
-
+   
     public void Init()
     {
 
     }
-    public void OnUpdate()
-    {
-        KeyAction?.Invoke();
-
-    }
-
-
+   
     public GameObject GetClicked2DObject(int LayerMask)
     {
         GameObject target = null;

@@ -34,7 +34,8 @@ public class Option : UI_PopUp
         Bind<Slider>(typeof(Sliders));
 
         Bind_Btn();
-
+        Get<Slider>((int)Sliders.BGMSlider).value = GameManager.Data.BGMVolume;
+        Get<Slider>((int)Sliders.SFXSlider).value = GameManager.Data.SFXVolume;
         Get<Slider>((int)Sliders.BGMSlider).onValueChanged.AddListener(delegate { VolumeChange(Define.Sounds.BGM); });
         Get<Slider>((int)Sliders.SFXSlider).onValueChanged.AddListener(delegate { VolumeChange(Define.Sounds.SFX); });
     }

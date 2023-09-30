@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static Define;
 
 public class GameUI : UI_Scene
 {
@@ -47,6 +46,7 @@ public class GameUI : UI_Scene
         Money,
         Help,
         Option,
+        BG_Btn
     }
 
     enum Texts
@@ -142,8 +142,10 @@ public class GameUI : UI_Scene
 
         BindEvent(GetButton((int)Buttons.Help).gameObject, Btn_Help);
         BindEvent(GetButton((int)Buttons.Option).gameObject, Btn_Option);
+        BindEvent(GetButton((int)Buttons.BG_Btn).gameObject, Btn_BG);
 
-        for(int i = 0; i < 3; i++)
+        
+        for (int i = 0; i < 3; i++)
         {
             toggle_Skill[i] = false;
             toggle_Tower[i] = false;
@@ -338,6 +340,28 @@ public class GameUI : UI_Scene
         GameManager.UI.ShowPopupUI<Help>();
 
     }
+
+    void Btn_BG(PointerEventData data)
+    {
+        for(int i = 0; i < 3; i++)
+        {
+
+            toggle_Tower[i] = false;
+            GetImage((int)Images.Tower_Fire_Plus + i).gameObject.SetActive(toggle_Tower[i]);
+
+            toggle_Skill[i] = false;
+            GetImage((int)Images.Skill_Explosion_Plus + i).gameObject.SetActive(toggle_Skill[i]);
+
+        }
+
+        toggle_AttackSpeed = false;
+        GetImage((int)Images.AttackSpeed_Plus).gameObject.SetActive(toggle_AttackSpeed);
+
+
+        toggle_Money = false;
+        GetImage((int)Images.Money_Plus).gameObject.SetActive(toggle_Money);
+
+    }
     void Btn_Option(PointerEventData data) 
     {
         GameManager.UI.ShowPopupUI<Option>();
@@ -348,14 +372,13 @@ public class GameUI : UI_Scene
     {
         if (toggle_Skill[(int)skill])
         {
-            Debug.Log("InSkillUpgrade");
             int SkillToLv = (int)skill + (int)Define.LV.Explosion;
             if (GameManager.Data.LV[SkillToLv] < 4 && (GameManager.Data.Money >= GameManager.Data.UPGRATECOST[GameManager.Data.LV[SkillToLv]]))
             {
                 GameManager.Data.Money -= GameManager.Data.UPGRATECOST[GameManager.Data.LV[SkillToLv]];
                 GameManager.Data.LV[SkillToLv] += 1;
 
-                GameManager.UI.ShowSceneUI<GameUI>()?.UpdateData();
+                UpdateData();
 
                 GetImage((int)Images.Skill_Explosion_LV + (int)skill).sprite = GameManager.Resource.Load<Sprite>($"Sprite/UI/9_LV{GameManager.Data.LV[SkillToLv] + 1}");
                 GetText((int)Texts.Skill_ExplosionTxt + (int)skill).text = $"{GameManager.Data.UPGRATECOST[GameManager.Data.LV[SkillToLv]]}";
@@ -381,7 +404,7 @@ public class GameUI : UI_Scene
                 GameManager.Data.Money -= GameManager.Data.UPGRATECOST[GameManager.Data.LV[TowerToLv]];
                 GameManager.Data.LV[TowerToLv] += 1;
 
-                GameManager.UI.ShowSceneUI<GameUI>()?.UpdateData();
+                UpdateData();
 
                 GetImage((int)Images.Tower_Fire_LV + (int)tower).sprite = GameManager.Resource.Load<Sprite>($"Sprite/UI/9_LV{GameManager.Data.LV[TowerToLv] + 1}");
                 GetText((int)Texts.Tower_FireTxt + (int)tower).text = $"{GameManager.Data.UPGRATECOST[GameManager.Data.LV[TowerToLv]]}";
@@ -482,15 +505,6 @@ public class GameUI : UI_Scene
 
     public void UpdateData()
     {
-        if(GetText((int)Texts.WaveNum) == null)
-        {
-            Debug.Log("(int)Texts.WaveNum");
-        } 
-        if(GameManager.Data.Wave == null)
-        {
-            Debug.Log("GameManager.Data.Wave == null");
-
-        }
         GetText((int)Texts.WaveNum).text = $"{GameManager.Data.Wave} WAVE";
         GetText((int)Texts.NowPoint).text = $"SCORE: {GameManager.Data.NowPoint}";
         GetText((int)Texts.MaxPoint).text = $"BEST SCORE: {GameManager.Data.MaxPoint}";

@@ -8,15 +8,25 @@ public class SkillTile : MonoBehaviour
     [SerializeField]
     Define.Skills Myskill;
 
-    //float[] _exitTime = new float[3] { 0.5f,5f,5f};
+    Monster_Controller _controllerIn;
 
-    public void InstanceSkill(Define.Skills skill)// 위 함수는 Tile_Controller에 가는게 맞습니다
+    static string Mob = "Mob";
+
+    static WaitForSeconds SKILLExplosionTime = new WaitForSeconds(0.4f);
+
+    static WaitForSeconds[] SKILLEXISTTIME;
+
+    static void SETSKILLEXISTTIME()
     {
+        if (SKILLEXISTTIME == null)
+        {
+            SKILLEXISTTIME = new WaitForSeconds[5];
+            for (int i = 0; i < 5; i++)
+            {
+                SKILLEXISTTIME[i] = new WaitForSeconds(GameManager.Data.SKILLEXISTTIME[i]);
+            }
 
-        Skill = Instantiate(GameManager.Data.Skills[(int)skill]);
-        Skill.transform.parent = transform;
-
-        Skill.transform.localPosition = new Vector3(0, 0, 0);
+        }
     }
 
     private void Start()
@@ -34,6 +44,7 @@ public class SkillTile : MonoBehaviour
                 break;
 
         }
+        
         this.transform.localScale = new Vector3(0.6482642f, 0.6180149f, 1f);
 
     }
@@ -41,26 +52,27 @@ public class SkillTile : MonoBehaviour
     //스킬 범위내 몬스터 추가
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Mob")//몬스터이고
+        if (other.gameObject.tag == Mob)//몬스터이고
         {
+            _controllerIn = other.GetComponent<Monster_Controller>();
             switch (Myskill) {
 
                 case Define.Skills.Explosion:
-                    other.GetComponent<Monster_Controller>().beAttacked(300);
+                    _controllerIn.beAttacked(300);
                     break;
                 case Define.Skills.Slow:
-                    if(other.GetComponent<Monster_Controller>().stickyCount == 0)//장판에 처음 들어옴
+                    if (_controllerIn.stickyCount == 0)//장판에 처음 들어옴
                     {
-                        other.GetComponent<Monster_Controller>().Speed = other.GetComponent<Monster_Controller>().DEFAULTSPEED / 2;//속도 감소
+                        _controllerIn.Speed = _controllerIn.DEFAULTSPEED / 2;//속도 감소
                     }
-                    other.GetComponent<Monster_Controller>().stickyCount++;
+                    _controllerIn.stickyCount++;
                     break;
                 case Define.Skills.Neutralize:
-                    if (other.GetComponent<Monster_Controller>().nullCount == 0)//장판에 처음 들어옴
+                    if (_controllerIn.nullCount == 0)//장판에 처음 들어옴
                     {
-                        other.GetComponent<Monster_Controller>().Property = Define.Properties.None;
+                        _controllerIn.Property = Define.Properties.None;
                     }
-                    other.GetComponent<Monster_Controller>().nullCount++;
+                    _controllerIn.nullCount++;
                     break;
             }
 
@@ -73,29 +85,28 @@ public class SkillTile : MonoBehaviour
     //스킬 범위내 몬스터 삭제
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Mob")//몬스터이면
+        if (other.gameObject.tag == Mob)//몬스터이면
         {
-            //gameObject.GetComponent<ResourceManager>().InAreaMonster_List.Remove(other.gameObject);
-
+            _controllerIn = other.GetComponent<Monster_Controller>();
             switch (Myskill)
             {
 
                 case Define.Skills.Explosion:
-                    //other.GetComponent<Monster_Controller>().beAttacked(300);
                     break;
                 case Define.Skills.Slow:
-                    if (other.GetComponent<Monster_Controller>().stickyCount == 1)//마지막 장판을 나감
+                    if (_controllerIn.stickyCount == 1)//마지막 장판을 나감
                     {
-                        other.GetComponent<Monster_Controller>().Speed = other.GetComponent<Monster_Controller>().DEFAULTSPEED;//원래대로
+                        _controllerIn.Speed = _controllerIn.DEFAULTSPEED;//원래대로
                     }
-                    other.GetComponent<Monster_Controller>().stickyCount--;
+                    _controllerIn.stickyCount--;
                     break;
                 case Define.Skills.Neutralize:
-                    if (other.GetComponent<Monster_Controller>().nullCount == 1)//마지막 장판을 나감
+                    
+                    if (_controllerIn.nullCount == 1)//마지막 장판을 나감
                     {
-                        other.GetComponent<Monster_Controller>().Property = other.GetComponent<Monster_Controller>().BornProperty;//원래대로
+                        _controllerIn.Property = _controllerIn.BornProperty;//원래대로
                     }
-                    other.GetComponent<Monster_Controller>().nullCount--;
+                    _controllerIn.nullCount--;
                     break;
 
                 default:
@@ -110,8 +121,25 @@ public class SkillTile : MonoBehaviour
     }
     IEnumerator ExistTime()
     {
-        Debug.Log($"LV[{(int)Myskill + 5}] : {GameManager.Data.LV[(int)Myskill + 5]} time: {GameManager.Data.SKILLEXISTTIME[GameManager.Data.LV[(int)Myskill + 5]]}");
-        yield return new WaitForSeconds(Myskill == Define.Skills.Explosion ? 0.4f : GameManager.Data.SKILLEXISTTIME[GameManager.Data.LV[(int)Myskill + 5]]);
+
+        Debug.Log("Enter");
+        if(Myskill == Define.Skills.Explosion)
+        {
+            yield return SKILLExplosionTime;
+        }
+        else
+        {
+            if (SKILLEXISTTIME == null)
+            {
+                SETSKILLEXISTTIME();
+                yield return SKILLEXISTTIME[GameManager.Data.LV[(int)Myskill + 5]];
+            }
+            else
+            {
+                yield return SKILLEXISTTIME[GameManager.Data.LV[(int)Myskill + 5]];
+
+            }
+        }
 
         Destroy(this.gameObject);
     }

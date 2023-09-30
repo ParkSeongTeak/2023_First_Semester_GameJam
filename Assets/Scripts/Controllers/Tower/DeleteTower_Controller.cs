@@ -9,18 +9,20 @@ public class DeleteTower_Controller : MonoBehaviour
     
     // Update is called once per frame
     
-    
+    static string Effect_tower_wajang_chang = "Effect/tower_wajang_chang";
+    Active_Delete_Tower _trigger;
     private void OnMouseDown()
     {
-        GameObject DeleteTower = GameManager.Input.GetClicked2DObject(1 << 9);
-        if (DeleteTower != null && DeleteTower == gameObject)
-        {
-            GameManager.Sound.Play("Effect/tower_wajang_chang");
-            GameManager.Data.Money += 10;
-            transform.parent.GetComponent<T_Controller>().SelfDestroy();
-        }
+        
+        GameManager.Sound.Play(Effect_tower_wajang_chang);
+        GameManager.Data.Money += 10;
+        _trigger.DeleteAction();
+        transform.parent.GetComponent<T_Controller>().SelfDestroy();
     }
-
+    public void GetTrigger(Active_Delete_Tower trigger)
+    {
+        _trigger = trigger;
+    }
     public void DeleteTower()
     {
         try
@@ -41,4 +43,5 @@ public class DeleteTower_Controller : MonoBehaviour
         }
 
     }
+
 }
