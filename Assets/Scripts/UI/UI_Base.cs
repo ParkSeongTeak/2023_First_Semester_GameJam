@@ -9,20 +9,20 @@ using TMPro;
 public abstract class UI_Base : MonoBehaviour
 {
     /// <summary>
-    /// °ü¸®ÇÒ object (GameObject, Text, Image µî ÅëÄª) ÀÚ·á±¸Á¶
+    /// ê´€ë¦¬í•  object (GameObject, Text, Image ë“± í†µì¹­) ìë£Œêµ¬ì¡°
     /// </summary>
     protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
 
     /// <summary>
-    /// initiate ÇÔ¼ö
+    /// initiate í•¨ìˆ˜
     /// </summary>
     public abstract void Init();
 
     /// <summary>
-    /// T Å¸ÀÔ objects dic¿¡ ÀúÀå
+    /// T íƒ€ì… objects dicì— ì €ì¥
     /// </summary>
-    /// <typeparam name="T"> ÇØ´ç Å¸ÀÔ </typeparam>
-    /// <param name="type"> ÇØ´ç Å¸ÀÔ Á¤º¸ °¡Áø enum </param>
+    /// <typeparam name="T"> í•´ë‹¹ íƒ€ì… </typeparam>
+    /// <param name="type"> í•´ë‹¹ íƒ€ì… ì •ë³´ ê°€ì§„ enum </param>
     protected void Bind<T>(Type type) where T : UnityEngine.Object
     {
         string[] names = Enum.GetNames(type);
@@ -40,10 +40,10 @@ public abstract class UI_Base : MonoBehaviour
         }
     }
     /// <summary>
-    /// ÇØ´ç game object¿¡ ÀÌº¥Æ® ÇÒ´ç
+    /// í•´ë‹¹ game objectì— ì´ë²¤íŠ¸ í• ë‹¹
     /// </summary>
-    /// <param name="action">ÇÒ´çÇÒ ÀÌº¥Æ®</param>
-    /// <param name="type">ÀÌº¥Æ® ¹ß»ı Á¶°Ç</param>
+    /// <param name="action">í• ë‹¹í•  ì´ë²¤íŠ¸</param>
+    /// <param name="type">ì´ë²¤íŠ¸ ë°œìƒ ì¡°ê±´</param>
     public static void BindEvent(GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
     {
         UI_EventHandler evt = Util.GetOrAddComponent<UI_EventHandler>(go);
@@ -70,7 +70,7 @@ public abstract class UI_Base : MonoBehaviour
     }
 
     /// <summary>
-    /// bindµÈ object¿¡¼­ ¿øÇÏ´Â object ¾ò±â
+    /// bindëœ objectì—ì„œ ì›í•˜ëŠ” object ì–»ê¸°
     /// </summary>
     protected T Get<T>(int idx) where T : UnityEngine.Object
     {
@@ -90,7 +90,7 @@ public abstract class UI_Base : MonoBehaviour
 
    
 
-    /// <summary> ¹İº¹¹®À¸·Î »ç¿ëÇÏ±â À§ÇÑ index »ç¿ë event ÇÒ´ç </summary>
+    /// <summary> ë°˜ë³µë¬¸ìœ¼ë¡œ ì‚¬ìš©í•˜ê¸° ìœ„í•œ index ì‚¬ìš© event í• ë‹¹ </summary>
     public static void BindEvent(GameObject go, Action<PointerEventData, object> action, object pivot, Define.UIEvent type = Define.UIEvent.Click)
     {
         UI_PivotEventHandler evt = Util.GetOrAddComponent<UI_PivotEventHandler>(go);
@@ -104,49 +104,14 @@ public abstract class UI_Base : MonoBehaviour
                 break;
         }
     }
-    /*
+ 
     public void SetResolution()
     {
-        float setWidth = 1080; // »ç¿ëÀÚ ¼³Á¤ ³Êºñ
-        float setHeight = 2340; // »ç¿ëÀÚ ¼³Á¤ ³ôÀÌ
+        float setWidth = 1080; // ì‚¬ìš©ì ì„¤ì • ë„ˆë¹„
+        float setHeight = 2340; // ì‚¬ìš©ì ì„¤ì • ë†’ì´
 
-        float deviceWidth = Screen.width; // ±â±â ³Êºñ ÀúÀå
-        float deviceHeight = Screen.height; // ±â±â ³ôÀÌ ÀúÀå
-
-        CanvasScaler _canvasScaler;
-        _canvasScaler = GetComponent<CanvasScaler>();
-        float targetAspectRatio = setWidth / setHeight;
-        float currentAspectRatio = deviceWidth / deviceHeight;
-
-        Screen.SetResolution((int)setWidth, (int)(((float)deviceHeight / deviceWidth) * setWidth), true); // SetResolution ÇÔ¼ö Á¦´ë·Î »ç¿ëÇÏ±â
-
-
-        _canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        _canvasScaler.referenceResolution = new Vector2(setWidth, setHeight);
-        _canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-        _canvasScaler.matchWidthOrHeight = 1f;
-
-        if (targetAspectRatio < currentAspectRatio) // ±â±âÀÇ ÇØ»óµµ ºñ°¡ ´õ Å« °æ¿ì
-        {
-            float newWidth = targetAspectRatio / currentAspectRatio; // »õ·Î¿î ³Êºñ
-            Camera.main.rect = new Rect((1f - newWidth) / 2f, 0f, newWidth, 1f); // »õ·Î¿î Rect Àû¿ë
-            _canvasScaler.matchWidthOrHeight = 1f;
-
-        }
-        else // °ÔÀÓÀÇ ÇØ»óµµ ºñ°¡ ´õ Å« °æ¿ì
-        {
-            float newHeight = currentAspectRatio / targetAspectRatio; // »õ·Î¿î ³ôÀÌ
-            Camera.main.rect = new Rect(0f, (1f - newHeight) / 2f, 1f, newHeight); // »õ·Î¿î Rect Àû¿ë
-            _canvasScaler.matchWidthOrHeight = 0f;
-        }
-    }*/
-    public void SetResolution()
-    {
-        float setWidth = 1080; // »ç¿ëÀÚ ¼³Á¤ ³Êºñ
-        float setHeight = 2340; // »ç¿ëÀÚ ¼³Á¤ ³ôÀÌ
-
-        float deviceWidth = Screen.width; // ±â±â ³Êºñ ÀúÀå
-        float deviceHeight = Screen.height; // ±â±â ³ôÀÌ ÀúÀå
+        float deviceWidth = Screen.width; // ê¸°ê¸° ë„ˆë¹„ ì €ì¥
+        float deviceHeight = Screen.height; // ê¸°ê¸° ë†’ì´ ì €ì¥
 
         CanvasScaler _canvasScaler;
         _canvasScaler = GetComponent<CanvasScaler>();
