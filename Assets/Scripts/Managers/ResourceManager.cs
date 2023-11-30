@@ -14,7 +14,7 @@ public class ResourceManager
     public List<GameObject> _monster_List = new List<GameObject>();
     public List<GameObject> Monster_List { get { return _monster_List; }set { _monster_List = value; } }
 
-    public List<GameObject> InAreaMonster_List = new List<GameObject>();//3*3¹üÀ§ ¸ó½ºÅÍ
+    public List<GameObject> InAreaMonster_List = new List<GameObject>();//3*3ë²”ìœ„ ëª¬ìŠ¤í„°
 
     int idx;
 
@@ -53,7 +53,6 @@ public class ResourceManager
         {
 
             string name = $"Monster{Enum.GetName(typeof(Define.Properties), property)}";
-            //destroyObj.transform.parent = MonsterPool;
 
             return UnityEngine.Object.Instantiate(_projectile[(int)property]);
         }
@@ -66,9 +65,6 @@ public class ResourceManager
     public void DestroyMonster(Define.Properties property, GameObject destroyObj)
     {
 
-        //UnityEngine.Object.Destroy(destroyObj);
-        //return;
-
 
         destroyObj.SetActive(false);
         GameManager.Pooling.SetPoolMonster(property, destroyObj);
@@ -76,10 +72,6 @@ public class ResourceManager
     }
     public void DestroyProjectile(Define.Properties property, GameObject destroyObj)
     {
-
-        //UnityEngine.Object.Destroy(destroyObj);
-        //return;
-
         destroyObj.SetActive(false);
         GameManager.Pooling.SetPoolProjectile(property, destroyObj);
 
@@ -88,8 +80,6 @@ public class ResourceManager
 
     public void OnUpdate()
     {
-        // Null?? Á×¾î¼­ Á¦°ÅÇßÀ½¿¡µµ °è¼Ó ´ëÇàÀÚ°¡ ºÎ¸¥´Ù ¿Ö?
-        //MonsterMove.Invoke();
     }
 
 
@@ -107,9 +97,9 @@ public class ResourceManager
         return Pool[path] as T;
     }
 
-    /// <summary> GameObject »ı¼º </summary>
+    /// <summary> GameObject ìƒì„± </summary>
     public GameObject Instantiate(string path, Transform parent = null) => Instantiate<GameObject>(path, parent);
-    /// <summary> T type object »ı¼º </summary>
+    /// <summary> T type object ìƒì„± </summary>
     public T Instantiate<T>(string path, Transform parent = null) where T : UnityEngine.Object
     {
         T prefab = Load<T>($"Prefabs/{path}");
